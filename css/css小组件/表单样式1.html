@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>JS Bin</title>
+  <style>
+    .layout {
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+        max-width: 600px;
+    }
+    .header {
+        /* 上下padding设置为1阻止外边距合并 */
+        padding: 1px 10px;
+        color: #fff;
+        background: rgb(0, 150, 136);
+    }
+    form {
+        padding: 20px;
+        background: #fff;
+    }
+    form div {
+        margin-top: 20px;
+    }
+    form input[type="text"] {
+        margin-top: 15px;
+        width: 100%;
+        height: 20px;
+        border: none;
+        border-bottom: 1px solid;
+    }
+
+    .f::after {
+        content: "";
+        display: block;
+        width: 0;
+        height: 0;
+        clear: both;
+    }
+    .f {
+        line-height: 1.5;
+    }
+    .checkbox {
+        margin-top: 0;
+        float: left;
+        width: 50%;
+    }
+    .radio {
+        margin-top: 0;
+        float: left;
+    }
+    input[type="submit"] {
+        margin-top: 20px;
+        padding: 8px 15px;
+        border: none;
+        background: rgb(1, 150, 136);
+        color: #fff;
+        cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class='layout'>
+    <div class="header">
+      <h2>信息收集表</h2>
+    </div>
+    <form action="#">
+      <div>
+        <label for="name">姓名</label> <br>
+        <input type="text" id="name">
+      </div>
+      <div>
+        <label for="QQ">QQ</label> <br>
+        <input type="text" id="QQ">
+      </div>
+      <div>
+        <label for="speak">要说的话</label> <br>
+        <input type="text" id="speak">
+      </div>
+      <div class="f">
+        <div class="checkbox">
+          <input type="checkbox" name="drinks" values="mike" id="mike" checked>
+          <label for="mike">Mike</label><br>
+          <input type="checkbox" name="drinks" values="Suger" id="Suger">
+          <label for="Suger">Suger</label><br>
+          <input type="checkbox" name="drinks" values="Lemon" id="Lemon">
+          <label for="Lemon">Lemon</label><br>
+        </div>
+        <div class="radio">
+          <input type="radio" name="gender" values="Male" id="Male" checked>
+          <label for="Male">Male</label><br>
+          <input type="radio" name="gender" values="FeMale" id="FeMale">
+          <label for="FeMale">FeMale</label><br>
+        </div>
+      </div>
+      <input type="submit" values="提交">
+    </form>
+  </div>
+</body>
+</html>

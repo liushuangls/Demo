@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>JS Bin</title>
+  <style>
+    .layout {
+        margin: 0 auto;
+        width: 80%;
+        max-width: 600px;
+        border-radius: 5px;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        background: #eee;
+    }
+    .layout ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .one-menu::after {
+        content: '';
+        display: block;
+        clear: both;
+    }
+
+    .one-menu > li {
+        float: left;
+        padding: 10px;
+    }
+
+    .layout li:hover {
+        background: #ccc;
+        cursor: pointer;
+    }
+    /* 二级菜单的参照 */
+    .two-menu {
+        position: relative;
+    }
+
+    .children {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: #fff;
+    }
+    .children li {
+        padding: 10px;
+    }
+    /* 选择当li hover状态时，这个li中class为children的元素 */
+    li:hover .children {
+        display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <ul class="one-menu">
+      <li>
+        <span>首页</span>
+      </li>
+      <li>
+        <span>作品</span>
+      </li>
+      <li class="two-menu">
+        <span>更多</span>
+        <div class="children">
+          <ul>
+            <li>Github</li>
+            <li>博客</li>
+            <li>知乎</li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+  </div>
+</body>
+</html>

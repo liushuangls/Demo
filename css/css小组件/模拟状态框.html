@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>JS Bin</title>
+  <style>
+    .panel {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 80%;
+        max-width: 500px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+    }
+    header {
+        padding: 1px 10px;
+        color: #fff;
+        background: rgb(0, 150, 136);
+    }
+    header span {
+        margin-top: 20px;
+        float: right;
+        cursor: pointer;
+    }
+    .panel div {
+        padding: 10px;
+    }
+
+    .panel > p {
+        margin: 0;
+        padding: 20px 10px;
+        color: #fff;
+        background: rgb(0, 150, 136);
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <h3>这是页面</h3>
+    <h3>这是页面</h3>
+    <h3>这是页面</h3>
+    <h3>这是页面</h3>
+    <h3>这是页面</h3>
+    <h3>这是页面</h3>
+  </div>
+  <div class="panel">
+    <header>
+      <span>X</span>
+      <h3>头部</h3>
+    </header>
+    <div>
+      <p>这是内容</p>
+      <p>这是内容</p>
+    </div>
+    <p>尾部</p>
+  </div>
+</body>
+</html>
