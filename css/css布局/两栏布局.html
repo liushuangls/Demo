@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>两栏布局</title>
+  <style>
+    .content {
+      max-width: 600px;
+      margin: 0 auto;
+      margin-bottom: 30px;
+    }
+    .clearfix::after {
+      content: '';
+      display: block;
+      clear: both;
+    }
+    .content aside {
+      float: left;
+      width: 100px;
+      height: 200px;
+      background: red;
+    }
+    .content main {
+      margin-left: 110px;
+      height: 300px;
+      background: yellow;
+    }
+    
+    .content2 {
+      max-width: 600px;
+      margin: 0 auto;
+      display: flex;
+    }
+    .content2 aside {
+      margin-right: 10px;
+      width: 100px;
+      height: 200px;
+      background: red;
+    }
+    .content2 main {
+      height: 300px;
+      background: yellow;
+      flex-grow: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="content clearfix">
+    <aside></aside>
+    <main>浮动布局</main>
+  </div>
+  <div class="content2">
+    <aside></aside>
+    <main>flex布局</main>
+  </div>
+</body>
+</html>

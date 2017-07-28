@@ -2,55 +2,59 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>JS Bin</title>
+  <title>二级菜单</title>
   <style>
     .layout {
-        margin: 0 auto;
-        width: 80%;
-        max-width: 600px;
-        border-radius: 5px;
-        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-        background: #eee;
+      margin: 0 auto;
+      width: 80%;
+      max-width: 600px;
+      border-radius: 5px;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+      background: #eee;
     }
     .layout ul {
-        margin: 0;
-        padding: 0;
-        list-style: none;
+      margin: 0;
+      padding: 0;
+      list-style: none;
     }
 
     .one-menu::after {
-        content: '';
-        display: block;
-        clear: both;
+      content: '';
+      display: block;
+      clear: both;
     }
 
     .one-menu > li {
-        float: left;
-        padding: 10px;
+      float: left;
+    }
+    .one-menu span {
+      display: inline-block;
+      padding: 8px 16px;
     }
 
-    .layout li:hover {
-        background: #ccc;
-        cursor: pointer;
+    .layout span:hover {
+      background: #ccc;
+      cursor: pointer;
     }
     /* 二级菜单的参照 */
     .two-menu {
-        position: relative;
+      position: relative;
     }
 
     .children {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        background: #fff;
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: #fff;
     }
-    .children li {
-        padding: 10px;
+    .children span {
+      padding: 8px 16px;
+      min-width: 160px;
     }
     /* 选择当li hover状态时，这个li中class为children的元素 */
     li:hover .children {
-        display: block;
+      display: block;
     }
   </style>
 </head>
@@ -67,9 +71,9 @@
         <span>更多</span>
         <div class="children">
           <ul>
-            <li>Github</li>
-            <li>博客</li>
-            <li>知乎</li>
+            <li><span>Github</span></li>
+            <li><span>博客</span></li>
+            <li><span>知乎</span></li>
           </ul>
         </div>
       </li>
