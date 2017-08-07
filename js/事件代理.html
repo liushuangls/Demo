@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>事件代理</title>
+  <style>
+    section {
+      width: 60%;
+      margin: 0 auto;
+    }
+    .list {
+      margin: 0;
+      padding: 0;
+    }
+    .list li {
+      margin-bottom: 2px;
+      padding: 5px 0;
+      border: 1px solid;
+      list-style: none;
+      cursor: pointer;
+    }
+    .show {
+      line-height: 1.5;
+      background-color: #0f0;
+    }
+  </style>
+</head>
+<body>
+  <section>
+    <ul class="list">
+      <li>aa</li>
+      <li>bb</li>
+      <li>cc</li>
+      <li>dd</li>
+    </ul>
+    <input id="txt" type="text"><button id="add">添加</button>
+    <div class="show" id="show"></div>
+  </section>
+
+  <script>
+    var list = document.querySelector('.list')
+    var txt = document.querySelector('#txt')
+    var addbtn = document.querySelector('#add')
+    var showBox = document.querySelector('#show')
+
+    list.addEventListener('click', function (e) {
+      var target = e.target
+      if (target.tagName.toLowerCase() === 'li') {
+        showBox.innerText = target.innerText
+      }
+    })
+
+    addbtn.addEventListener('click', function () {
+      var liNode = document.createElement('li')
+      liNode.innerText = txt.value
+      list.appendChild(liNode)
+    })
+  </script>
+</body>
+</html>
