@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>tab</title>
+  <style>
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      text-align: center;
+    }
+    .clearfix::after {
+      content: '';
+      display: block;
+      clear: both;
+    }
+    .tab > li {
+      float: left;
+      height: 30px;
+      width: 60px;
+      line-height: 30px;
+      border: 1px solid;
+      border-right: none;
+      cursor: pointer;
+    }
+    .tab > li:last-child {
+      border-right: 1px solid;
+    }
+    .tab > li.active {
+      background-color: #ccc;
+    }
+
+    .ct > li {
+      display: none;
+      width: 182px;
+      height: 150px;
+      line-height: 150px;
+      border: 1px solid;
+      border-top: none;
+    }
+    .ct > li.active {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="tab-ct">
+    <ul class="tab clearfix">
+      <li class="active">tab1</li>
+      <li>tab2</li>
+      <li>tab3</li>
+    </ul>
+    <ul class="ct">
+      <li class="active">ct1</li>
+      <li>ct2</li>
+      <li>ct3</li>
+    </ul>
+  </div>
+
+  <script>
+    var tabs = document.querySelectorAll('.tab>li')
+    var cts = document.querySelectorAll('.ct>li')
+
+    tabs.forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        tabs.forEach(function (t) {
+          t.classList.remove('active')
+        })
+
+        this.classList.add('active')
+        var index = [].indexOf.call(tabs, this)
+
+        cts.forEach(function (ct) {
+          ct.classList.remove('active')
+        })
+        cts[index].classList.add('active')
+      })
+    })
+  </script>
+</body>
+</html>
