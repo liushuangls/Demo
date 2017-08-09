@@ -59,10 +59,14 @@
         timeStr = time
       }
       show.textContent = timeStr
-      if (time > 0) {
-        time--
-        timeID = setTimeout(showTime, 1000, time)
+      if (time === 0) {
+       if (Notification.permission === "granted") {
+         var notification = new Notification("时间到!");
+       }
+       return 
       }
+      time--
+      timeID = setTimeout(showTime, 1000, time)
     }
 
     startBtn.addEventListener('click', function () {
