@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>倒计时</title>
+  <style>
+    .container {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      padding: 10px;
+      transform: translate(-50%,-50%);
+      text-align: center;
+    }
+    .unit {
+      padding: 5px;
+      vertical-align: middle;
+    }
+    input {
+      border: 1px solid;
+      padding: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>倒计时</h1>
+    <input class="time" type="text" placeholder="请输入时间">
+    <select class="unit">
+      <option value="秒">秒</option>
+      <option value="分">分</option>
+      <option value="时">时</option>
+    </select>
+    <button class="start">start</button>
+    <button class="pause" disabled>pause</button>
+    <button class="resume" disabled>resume</button>
+    <h1 class="show"></h1>
+  </div>
+
+  <script>
+    var timeValue = document.querySelector('.time'),
+        unit = document.querySelector('.unit'),
+        startBtn = document.querySelector('.start'),
+        pauseBtn = document.querySelector('.pause'),
+        resumeBtn = document.querySelector('.resume'),
+        show = document.querySelector('.show')
+
+    var timeID,time
+
+    function showTime () {
+      timeStr = ''
+      if (time >= 3600) {
+        timeStr = Math.floor(time/3600) + ':' + Math.floor(time%3600/60) + ':' + Math.floor(time%60)
+      } else if (time >= 60) {
+        timeStr = Math.floor(time/60) + ':' + Math.floor(time%60)
+      } else {
+        timeStr = time
+      }
+      show.textContent = timeStr
+      if (time > 0) {
+        time--
+        timeID = setTimeout(showTime, 1000, time)
+      }
+    }
+
+    startBtn.addEventListener('click', function () {
+      window.clearTimeout(timeID)
+      time = parseInt(timeValue.value)
+      if (isNaN(time)) {
+        show.textContent = '请输入数字'
+        return
+      }
+      if (unit.value === '时') {
+        time = time*3600
+      } else if (unit.value === '分') {
+        time = time * 60
+      }
+      showTime()
+
+      pauseBtn.disabled = false
+    })
+
+    pauseBtn.addEventListener('click', function () {
+      window.clearTimeout(timeID)
+      resumeBtn.disabled = false
+      pauseBtn.disabled = true
+    })
+
+    resumeBtn.addEventListener('click', function () {
+      showTime()
+      resumeBtn.disabled = true
+      pauseBtn.disabled = false
+    })
+  </script>
+</body>
+</html>
