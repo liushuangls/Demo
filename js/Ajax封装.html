@@ -58,15 +58,14 @@
           index: pageIndex,
           length: 5
         },
-        onSuccess: callback,
-        onError: function () {
+        success: callback,
+        error: function () {
           console.log('error:' + xhr.status)
         }
       })
     }
 
     function render (data) {
-      var data = JSON.parse(data)
       var html = document.createDocumentFragment()
       for (var i = 0; i < data.length; i++) {
         var node = document.createElement('li')
@@ -76,28 +75,43 @@
       ct.appendChild(html)
     }
 
-    function ajax(options) {
+    function ajax(opts) {
+      opts.success = opts.success || function () {}
+      opts.error = opts.error || function () {}
+      opts.method = opts.method || 'get'
+      opts.dataType = opts.dataType || 'json'
+      opts.data = opts.data || {}
+      
+      var query = ''
+      for (var key in opts.data) {
+        query += key + '=' + opts.data[key] + '&'
+      }
+      query = query.substr(0, query.length - 1)
+
       var xhr = new XMLHttpRequest()
       xhr.onreadystatechange = function () {
         if (xhr.readyState === 4) {
-          if (xhr.status === 200 || xhr.status === 304) {
-           options.onSuccess(xhr.response) 
+          if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 304) {
+            if (opts.dataType === 'text') {
+              opts.success(xhr.responseText)
+            } 
+            if (opts.dataType === 'json') {
+              var data = JSON.parse(xhr.responseText)
+              opts.success(data)
+            }
           } else {
-            options.onError()
+            opts.error()
           }
         }
       }
-      var query = '?'
-      for (var key in options.data) {
-        query += key + '=' + options.data[key] + '&'
-      }
-      query = query.substr(0, query.length - 1)
-      if (options.method.toLowerCase() === 'get') {
-        xhr.open(options.method, options.url+query)
+     
+      if (opts.method.toLowerCase() === 'get') {
+        xhr.open(opts.method, opts.url+query)
         xhr.send()
       }
-      if (options.method.toLowerCase() === 'post') {
-        xhr.open(options.method, options.url)
+      if (opts.method.toLowerCase() === 'post') {
+        xhr.open(opts.method, opts.url)
+        shr.setRequestHeader('content-type', 'application/x-www-form-urlencoded')
         xhr.send(query)
       }
     }
