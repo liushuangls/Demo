@@ -59,7 +59,7 @@
           length: 5
         },
         success: callback,
-        error: function () {
+        error: function (xhr) {
           console.log('error:' + xhr.status)
         }
       })
@@ -100,13 +100,13 @@
               opts.success(data)
             }
           } else {
-            opts.error()
+            opts.error(xhr)
           }
         }
       }
      
       if (opts.method.toLowerCase() === 'get') {
-        xhr.open(opts.method, opts.url+query)
+        xhr.open(opts.method, opts.url+'?'+query)
         xhr.send()
       }
       if (opts.method.toLowerCase() === 'post') {
