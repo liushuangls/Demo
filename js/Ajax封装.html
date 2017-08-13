@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    body {
+      text-align: center;
+    }
+    .ct {
+      margin: 0 auto;
+      width: 80%;
+      list-style: none;
+    }
+    .ct li {
+      margin-bottom: 10px;
+      padding: 5px;
+      border: 1px solid green;
+    }
+    .btn {
+      padding: 5px 10px;
+      border: 1px solid green;
+      text-decoration: none;
+      color: #000;
+      overflow: auto;
+    }
+
+  </style>
+</head>
+<body>
+  <ul class="ct"></ul>
+  <a id="load-more" class="btn" href="#">加载更多</a>
+
+  <script>
+    var btn = document.querySelector('#load-more'),
+        ct = document.querySelector('.ct')
+    var isDataArrive = true
+    var pageIndex = 0
+    
+    btn.onclick = function (e) {
+      e.preventDefault()
+      if (!isDataArrive) {
+        return
+      }
+      loadData(render)
+      isDataArrive = true
+      pageIndex += 5
+    }
+
+    function loadData(callback) {
+      isDataArrive = false
+      ajax({
+        method: 'get',
+        url: '/loadMore',
+        data: {
+          index: pageIndex,
+          length: 5
+        },
+        onSuccess: callback,
+        onError: function () {
+          console.log('error:' + xhr.status)
+        }
+      })
+    }
+
+    function render (data) {
+      var data = JSON.parse(data)
+      var html = document.createDocumentFragment()
+      for (var i = 0; i < data.length; i++) {
+        var node = document.createElement('li')
+        node.innerText = data[i]
+        html.appendChild(node)
+      }
+      ct.appendChild(html)
+    }
+
+    function ajax(options) {
+      var xhr = new XMLHttpRequest()
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200 || xhr.status === 304) {
+           options.onSuccess(xhr.response) 
+          } else {
+            options.onError()
+          }
+        }
+      }
+      var query = '?'
+      for (var key in options.data) {
+        query += key + '=' + options.data[key] + '&'
+      }
+      query = query.substr(0, query.length - 1)
+      if (options.method.toLowerCase() === 'get') {
+        xhr.open(options.method, options.url+query)
+        xhr.send()
+      }
+      if (options.method.toLowerCase() === 'post') {
+        xhr.open(options.method, options.url)
+        xhr.send(query)
+      }
+    }
+  </script>
+</body>
+</html>
