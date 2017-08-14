@@ -26,7 +26,7 @@
     btn.onclick = function () {
       var js = document.createElement('script')
       // 根据后端接口传递callback
-      js.src = 'http://localhost:8080/jsonp'
+      js.src = 'http://localhost:8080/jsonp?callback=renderPage'
       document.body.appendChild(js)
       document.body.removeChild(js)
     }
