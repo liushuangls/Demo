@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>cors</title>
+  <style>
+    body {
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <ul id="ct">
+    
+  </ul>
+  <button id="load-news">加载新闻</button> 
+
+  <script>
+    // 与普通的ajax唯一的区别是cors需要在服务器端设置响应头
+    var btn = document.querySelector('#load-news')
+    var ct = document.querySelector('#ct')    
+    
+    btn.onclick = function () {
+      var xhr = new XMLHttpRequest()
+      xhr.onload = function () {
+        if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 304) {
+          renderPage(xhr.response)
+        } else {
+          console.log('error:' + xhr.status)
+        }
+      }
+      xhr.open('get', 'http://localhost:8080/cors')
+      xhr.send()
+    }
+    
+    function renderPage(data) {
+      data = JSON.parse(data)
+      var node = ''
+      for (var key in data) {
+        node += '<li>' + data[key] + '</li>'
+      }
+      ct.innerHTML = node
+    }
+  </script>
+</body>
+</html>
