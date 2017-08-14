@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>postMessage-a</title>
+  <style>
+    .ct {
+      width: 80%;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="ct">
+    <h2>使用postMessage实现同顶级域名下的跨域通信</h2>
+    <div class="main">
+      <input id="ipt" type="text">
+    </div>
+    <iframe src="http://localhost:8080/postMessage/b.html"></iframe>
+  </div>
+
+  <script>
+    var ipt = document.querySelector('#ipt')
+
+    ipt.addEventListener('input', function () {
+      window.frames[0].postMessage(this.value, '*')
+    })
+
+    // 监听其它页面发送来的消息
+    window.addEventListener('message', function (e) {
+      ipt.value = e.data
+    })
+  </script>
+</body>
+</html>

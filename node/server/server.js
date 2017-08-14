@@ -40,9 +40,10 @@ var server = http.createServer(function (req, res) {
   var staticPath = path.join(__dirname, 'www')
   var pathObj = url.parse(req.url, true)
   var filePath = path.join(staticPath, pathObj.pathname)
+  console.log(filePath)
   try {
-    var fileContent = fs.readdirSync(filePath, 'binary')
-    res.write(fileContent)
+    var fileContent = fs.readFileSync(filePath, 'binary')
+    res.write(fileContent, 'binary')
     res.end()
   } catch(e) {
     var ss = res
@@ -51,7 +52,7 @@ var server = http.createServer(function (req, res) {
     }else if(pathObj.pathname === '/cors') {
       router.cors(ss)
     } else {
-      res.setHeader(404, 'not found')
+      res.writeHead(404, 'not found')
       res.end('not fonud')
     }
   }
