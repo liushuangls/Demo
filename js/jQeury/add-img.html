@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>tab切换</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      font-size: 12px;
+    }
+    a {
+      text-decoration: none;
+      color: #000;
+    }
+    .clearfix::after {
+      content: '';
+      display: block;
+      clear: both;
+    }
+
+    h2 {
+      color: #666;
+    }
+    .panel-ct {
+      width: 644px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .panel-ct li {
+      position: relative;
+      float: left;
+      margin-right: 20px;
+      margin-bottom: 20px;
+      padding: 10px 20px;
+      border: 1px solid #ccc;
+      width: 200px;
+    }
+    .panel-ct li:nth-child(3n) {
+      margin-right: 0;
+    }
+    .panel-ct span {
+      color: #f00;
+    }
+    .panel-ct li:hover .cover {
+      opacity: 1;
+    }
+    .panel-ct .cover {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      background-color: rgba(0, 0, 0, .2);
+      transition: all .3s;
+      opacity: 0;
+    }
+    .panel-ct .cover::after {
+      content: '';
+      display: inline-block;
+      height: 100%;
+      vertical-align: middle;
+    }
+    .panel-ct button {
+      border: 1px solid #f00;
+      padding: 8px 10px;
+      border-radius: 5px;
+      background-color: #fff;
+      cursor: pointer;
+    }
+    .panel-ct ul {
+      display: none;
+    }
+    .panel-ct .active {
+      display: block;
+    }
+    
+  </style>
+  <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+  <section class="mod-tab mod-tab1">
+    <main class="panel-ct clearfix">
+      <h2>珠宝首饰</h2>
+      <ul class="active">
+        <li>
+          <div class="cover">
+            <button>立即购买</button>
+          </div>
+          <img src="http://img10.360buyimg.com/N3/jfs/t1360/330/897475737/123557/23624706/55b05e25N13d4ec5e.jpg">
+          <p>藏美千足金和田玉金镶玉路路通吊坠</p>
+          <span>1699￥</span>
+        </li>
+        <li>
+          <div class="cover">
+            <button>立即购买</button>
+          </div>
+          <img src="http://img10.360buyimg.com/N3/jfs/t1360/330/897475737/123557/23624706/55b05e25N13d4ec5e.jpg">
+          <p>藏美千足金和田玉金镶玉路路通吊坠</p>
+          <span>1699￥</span>
+        </li>
+        <li>
+          <div class="cover">
+            <button>立即购买</button>
+          </div>
+          <img src="http://img10.360buyimg.com/N3/jfs/t1360/330/897475737/123557/23624706/55b05e25N13d4ec5e.jpg">
+          <p>藏美千足金和田玉金镶玉路路通吊坠</p>
+          <span>1699￥</span>
+        </li>
+        <li>
+          <div class="cover">
+            <button>立即购买</button>
+          </div>
+          <img src="http://img10.360buyimg.com/N3/jfs/t1360/330/897475737/123557/23624706/55b05e25N13d4ec5e.jpg">
+          <p>藏美千足金和田玉金镶玉路路通吊坠</p>
+          <span>1699￥</span>
+        </li>
+        <li>
+          <div class="cover">
+            <button>立即购买</button>
+          </div>
+          <img src="http://img10.360buyimg.com/N3/jfs/t1360/330/897475737/123557/23624706/55b05e25N13d4ec5e.jpg">
+          <p>藏美千足金和田玉金镶玉路路通吊坠</p>
+          <span>1699￥</span>
+        </li>
+        <li>
+          <div class="cover">
+            <button>立即购买</button>
+          </div>
+          <img src="http://img10.360buyimg.com/N3/jfs/t1360/330/897475737/123557/23624706/55b05e25N13d4ec5e.jpg">
+          <p>藏美千足金和田玉金镶玉路路通吊坠</p>
+          <span>1699￥</span>
+        </li>
+      </ul>
+      <button id="add-btn">添加</button>
+    </main>
+  </section>
+  <script>
+    var products = [
+        {
+          img: 'http://img10.360buyimg.com/N3/jfs/t2242/92/1446546284/374195/9196ac66/56af0958N1a723458.jpg',
+          name: '珂兰 黄金手 猴哥款',
+          price: '￥405.00'
+        },{
+          img: 'http://img10.360buyimg.com/N3/jfs/t2242/92/1446546284/374195/9196ac66/56af0958N1a723458.jpg',
+          name: '珂兰 黄金转运珠 猴哥款',
+          price: '￥100.00'
+        },{
+          img: 'http://img10.360buyimg.com/N3/jfs/t2242/92/1446546284/374195/9196ac66/56af0958N1a723458.jpg',
+          name: '珂兰 黄金手链 3D猴哥款',
+          price: '￥45.00'
+        }
+      ];
+
+    function getProdHtml(prod) {
+      var html = '<li>'
+      html += '<div class="cover"><button>立即购买</button></div>'
+      html += '<img src="'+prod.img+'">'
+      html += '<p>"'+prod.name+'"</p>'
+      html += '<span>"'+prod.price+'"</span>'
+      html += '</li>'
+      return html
+    }
+
+    $('#add-btn').on('click', function() {
+      products.forEach(function(x) {
+        $('.active').append(getProdHtml(x))
+      })
+    })
+  </script>
+</body>
+</html>
