@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>cors</title>
+  <style>
+    body {
+      text-align: center;
+    }
+    ul {
+      list-style: none;
+    }
+    li {
+      border: 1px solid #0f0;
+      padding: 10px;
+      margin-bottom: 20px;
+      cursor: pointer;
+    }
+    li:hover {
+      background-color: #0f0;
+    }
+  </style>
+  <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+  <ul id="ct">
+  </ul>
+  <button id="load-news">加载新闻</button> 
+
+  <script>
+    // 与普通的ajax唯一的区别是cors需要在服务器端设置响应头
+    var $btn = $('#load-news')
+    var $ct = $('#ct')    
+    
+    $btn.on('click', function() {
+      $.ajax({
+        type: 'get',
+        url: 'http://localhost:8080/cors',
+        dataType: 'json'
+      }).done(function(data) {
+        renderPage(data)
+      })
+    })
+    
+    function renderPage(data) {
+      var html = $ct.html()
+      for (var key in data) {
+        html += '<li>' + data[key] + '</li>'
+      }
+      $ct.html(html)
+    }
+  </script>
+</body>
+</html>

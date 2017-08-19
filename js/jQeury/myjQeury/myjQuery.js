@@ -1,0 +1,5 @@
+window.$ = function() {
+  return {
+    
+  }
+}
