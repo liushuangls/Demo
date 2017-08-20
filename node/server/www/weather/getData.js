@@ -98,7 +98,7 @@ function getTime() {
 
 $('#query-btn').on('click', function() {
   var city = $('#query-city').val()
-  if (!/^{1,}$/.test(city)) {
+  if (!/^[a-z]{1,}$/.test(city)) {
     alert('仅至此拼音查询！')
     return
   }
