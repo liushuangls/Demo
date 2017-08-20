@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Weather</title>
+  <link rel="stylesheet" href="./normalize.css">
+  <link rel="stylesheet" href="./main.css">
+  <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+  <section class="container">
+    <img src="./img/gps.png">
+    <h3 class="city" id="city">成都市</h3> 
+    <div class="query">
+      <input id="query-city" type="text" placeholder="仅支持拼音查询">
+      <button id="query-btn">查询</button>
+    </div>
+    <ul class="tabs clearfix">
+      <li class="active">今天</li>
+      <li>7天</li>
+    </ul>
+    <div class="panel">
+      <ul class="today clearfix">
+        <li class="now">
+          <p id="now">10:40</p>
+          <div class="box1">
+            <img src="./img/温度计.png">
+            <span id="now-tem">32°C</span>
+          </div>
+          <div class="box2">
+            <section>
+              <img src="./img/湿度.png">
+              <span>相对湿度 <b id="now-humidity">74%</b></span>
+            </section>
+            <section>
+              <img src="./img/风向.png">
+              <span id="now-wind">北风 1级</span>
+            </section>
+          </div>
+          <div class="box3">
+            <img src="./img/空气质量.png">
+            <span id="now-quality">优</span>
+          </div>
+        </li>
+        <li class="tem during">
+          <span class="pu"><span id="tem-day">20</span>日白天</span>
+          <div class="weather-img tem-during"></div>
+          <p class="pu rain">小雨</p>
+          <p class="temper high">32°C</>
+          <p class="pu wind">微风</p>
+          <div class="time">
+            <img src="./img/太阳.png">
+            <span>日出 <b id="sunrise">06：32</b></span>
+          </div>
+        </li>
+        <li class='tem eveing'>
+            <span class="pu"><span id="tem-day">20</span>日夜晚</span>
+            <div class="weather-img tem-during"></div>
+            <p class="pu rain">小雨</p>
+            <p class="temper low">32°C</p>
+            <p class="pu wind">微风</p>
+            <div class="time">
+              <img src="./img/太阳.png">
+              <span>日落 <b id="sunset">06：32</b></span>
+            </div>
+        </li>
+      </ul>
+      <ul class="future">
+        <li id="one">
+          <p class="f-day">20日(今天)</p>
+          <div class="weather-img f-img"></div>
+          <p class="f-r">小雨</p>
+          <p class="f-tem">33°C ~ 25°C</p>
+          <p class="f-wind">微风</p>
+        </li>
+        <li id="two">
+          <p class="f-day">20日(今天)</p>
+          <div class="weather-img f-img"></div>
+          <p class="f-r">小雨</p>
+          <p class="f-tem">33°C ~ 25°C</p>
+          <p class="f-wind">微风</p>
+        </li>
+        <li id="three">
+          <p class="f-day">20日(今天)</p>
+          <div class="weather-img f-img"></div>
+          <p class="f-r">小雨</p>
+          <p class="f-tem">33°C ~ 25°C</p>
+          <p class="f-wind">微风</p>
+        </li>
+        <li id="four">
+          <p class="f-day">20日(今天)</p>
+          <div class="weather-img f-img"></div>
+          <p class="f-r">小雨</p>
+          <p class="f-tem">33°C ~ 25°C</p>
+          <p class="f-wind">微风</p>
+        </li>
+        <li id="five">
+          <p class="f-day">20日(今天)</p>
+          <div class="weather-img f-img"></div>
+          <p class="f-r">小雨</p>
+          <p class="f-tem">33°C ~ 25°C</p>
+          <p class="f-wind">微风</p>
+        </li>
+        <li id="six">
+          <p class="f-day">20日(今天)</p>
+          <div class="weather-img f-img"></div>
+          <p class="f-r">小雨</p>
+          <p class="f-tem">33°C ~ 25°C</p>
+          <p class="f-wind">微风</p>
+        </li>
+        <li id="seven">
+          <p class="f-day">20日(今天)</p>
+          <div class="weather-img f-img"></div>
+          <p class="f-r">小雨</p>
+          <p class="f-tem">33°C ~ 25°C</p>
+          <p class="f-wind">微风</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <script src="./setData.js"></script>
+  <script src='./getData.js'></script>
+</body>
+</html>

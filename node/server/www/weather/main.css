@@ -1,0 +1,158 @@
+* {
+  box-sizing: border-box;
+}
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+b {
+  font-weight: normal;
+}
+.clearfix::after {
+  content: '';
+  display: block;
+  clear: both;
+}
+.weather-img {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto;
+  background-image: url('./img/blue80.png')
+}
+
+.container {
+  position: relative;
+  width: 680px;
+  margin: 0 auto;
+}
+.container > h3 {
+  margin-left: 35px;
+}
+.container > img {
+  position: absolute;
+  left: -10px;
+  top: -15px;
+}
+.container .tabs li{
+  float: left;
+  width: 339px;
+  padding: 5px 0;
+  text-align: center;
+  background-color: #d0ebff;
+  cursor: pointer;
+}
+.tabs li:first-child {
+  margin-right: 2px;
+}
+.tabs li:hover,
+.tabs > li.active {
+  background-color: #ecf7ff;
+  color: #3466bb;
+}
+
+.query {
+  position: absolute;
+  top: 0;
+  right: 20px
+}
+.query button {
+  padding: 5px 8px;
+  background-color: #ecf7ff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.query input {
+  border: 1px solid #4B83E3;
+  border-radius: 5px;
+  padding: 4px 10px;
+  outline: none;
+}
+.query input:hover {
+  border: 1px solid #0E6E40;
+}
+
+.panel {
+  width: 680px;
+}
+.panel > ul {
+  margin-top: 10px;
+}
+.today li {
+  float: left;
+  width: 154px;
+  height: 296px;
+  margin-left: 5px;
+  border: 1px solid #d4d4d4;
+  text-align: center;
+}
+.today li:first-child {
+  margin-left: 0;
+  width: 361px;
+  padding: 10px;
+}
+.now p {
+  text-align: left;
+  margin-left: 20px;
+  color: #7e7e7e;
+}
+.now .box1 span {
+  position: relative;
+  top: -10px;
+  left: -10px;
+  display: inline-block;
+  font-size: 48px;
+  color: #3466bb;
+}
+.box2 section {
+  position: relative;
+  display: inline-block;
+}
+.box2 section:first-child {
+  position: absolute;
+  left: 45px;
+}
+.box2 section:last-child {
+  position: absolute;
+  left: 240px;
+}
+.box3 {
+  position: relative;
+  left: -110px;
+  top: 30px;
+  margin-top: 10px;
+}
+.box2 span,
+.box3 span {
+  position: relative;
+  top: -6px;
+}
+
+.tem {
+  padding: 20px 0;
+}
+.tem .weather-img {
+  background-position: -560px 0;
+}
+.tem .time span {
+  position: relative;
+  top: -6px;
+}
+
+.future {
+  display: none;
+}
+.future > li {
+  float: left;
+  width: 94px;
+  height: 242px;
+  margin-right: 3px;
+  text-align: center;
+  font-size: 14px;
+  background-color: #f2f9ff;
+  cursor: pointer;
+}
+.future > li:hover {
+  border: 2px solid #accfe9;
+}
