@@ -1,6 +1,6 @@
 var weather = {}
 var ip, city, cityid
-console.log(+new Date())
+
 function query(city) {
   if(city) {
     getCityId(city, getWeather)
@@ -56,7 +56,6 @@ function getWeather(cityid) {
     getFuture(future, 5)
     getFuture(future, 6)
 
-    console.log(+new Date())
   })
 }
 
@@ -99,13 +98,10 @@ function getTime() {
 $('#query-btn').on('click', function() {
   var city = $('#query-city').val()
   if (!/^[a-z]{1,}$/.test(city)) {
-    alert('仅至此拼音查询！')
+    alert('仅支持拼音查询！')
     return
   }
-  if (city) {
-    weather.city = city
-    query(city)
-  } else {
-    alert('值不能为空！')
-  }
+
+  weather.city = city
+  query(city)
 })
