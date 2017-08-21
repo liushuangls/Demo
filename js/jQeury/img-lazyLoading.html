@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>img-lazyLoading</title>
+  <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <style>
+    div {
+      width: 95%;
+      margin: 0 auto;
+      text-align: center;
+    }
+    ul {
+      list-style: none;
+    }
+    li {
+      float: left;
+      width: 30%;
+      margin: 10px;
+    }
+    img {
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <ul>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+    <li><img src="" alt=""></li>
+  </ul>
+
+  <script>
+    var imgArr = [
+      'https://i0.wp.com/picjumbo.com/wp-content/uploads/HNCK2963.jpg?resize=1000,667&quality=80',
+      'https://i0.wp.com/picjumbo.com/wp-content/uploads/HNCK3418.jpg?resize=1000,667&quality=80',
+      'https://i0.wp.com/picjumbo.com/wp-content/uploads/HNCK7446.jpg?resize=1000,667&quality=80',
+      'https://i0.wp.com/picjumbo.com/wp-content/uploads/HNCK3486.jpg?resize=1000,667&quality=80',
+      'https://i0.wp.com/picjumbo.com/wp-content/uploads/HNCK3008.jpg?resize=1000,667&quality=80',
+      'https://i0.wp.com/picjumbo.com/wp-content/uploads/HNCK06251.jpg?resize=1000,667&quality=80',
+      'https://i0.wp.com/picjumbo.com/wp-content/uploads/P1000969.jpg?resize=1000,667&quality=80',
+      'https://i0.wp.com/picjumbo.com/wp-content/uploads/HNCK1959.jpg?resize=1000,667&quality=80',
+      'https://i0.wp.com/picjumbo.com/wp-content/uploads/HNCK4762.jpg?resize=1000,667&quality=80',
+      'https://i0.wp.com/picjumbo.com/wp-content/uploads/DSC00808.jpg?resize=1000,667&quality=80',
+      'https://i0.wp.com/picjumbo.com/wp-content/uploads/DSC00951.jpg?resize=1570,1047&quality=50'
+    ]
+
+    lazyRender($('ul img'))
+
+    var timmer
+    $(window).on('scroll', function () {
+      if (timmer) {
+        clearTimeout(timmer)
+      }
+      timmer = setTimeout(function () {
+        console.log(1)
+        lazyRender($('ul img'))
+      }, 50)
+    })
+
+    function lazyRender($imgs) {
+      $imgs.each(function () {
+        var $this = $(this)
+        if (checkShow($this) && !isLoaded($this)) {
+          loadImg($this)
+        }
+      })
+    }
+
+    function checkShow($node) {
+      var scrollTop = $(window).scrollTop()
+      var windowVisible = scrollTop + $(window).height()
+      var offsetTop = $node.offset().top
+      if (offsetTop < windowVisible && offsetTop > scrollTop) {
+        return true
+      }
+      return false
+    }
+
+    function isLoaded($node) {
+      return $node.attr('src')
+    }
+
+    function loadImg($node) {
+      var random = Math.floor(Math.random() * 12)
+      $node.attr('src', imgArr[random])
+    }
+
+  </script>
+</body>
+</html>
