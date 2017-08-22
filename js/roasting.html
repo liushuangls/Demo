@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>js-roasting</title>
+  <style>
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    li {
+      margin: 0;
+      padding: 0;
+    }
+
+    .roast1,
+    .roast2 {
+      position: relative;
+      width: 320px;
+      height: 240px;
+      overflow: hidden;
+      margin: 20px 0;
+    }
+    .roast1 .img {
+      position: absolute;
+      left: -320px;
+    }
+    .roast2 .img {
+      position: absolute;
+      width: 1280px;
+    }
+    .roast2 .img li {
+      display: none;
+    }
+    .roast2 .img li:first-child {
+      display: block;
+    }
+    .img li {
+      float: left;
+      opacity: 1;
+    }
+    .img img {
+      width: 320px;
+      height: 240px;
+    }
+    .pre,
+    .next {
+      position: absolute;
+      top: 50%;
+      margin-top: -15px;
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      border: 1px solid #fff;
+      border-radius: 50%;
+      font-size: 20px;
+      color: #fff;
+      line-height: 30px;
+      text-align: center;
+      cursor: pointer;
+      z-index: 1;
+    }
+    .pre::selection,
+    .next::selection {
+      background-color: rgba(0, 0, 0, 0);
+    }
+    .pre {
+      left: 10px;
+    }
+    .next {
+      right: 10px;
+    }
+
+    .bullet {
+      position: absolute;
+      bottom: 20px;
+      width: 100%;
+      text-align: center;
+    }
+    .bullet > li {
+      display: inline-block;
+      width: 20px;
+      height: 6px;
+      margin-left: 4px;
+      border: 1px solid #fff;
+      border-radius: 2px;
+      cursor: pointer;
+    }
+    .bullet .active {
+      background-color: #ccc;
+    }
+  </style>
+</head>
+<body>
+  <section class="roast1">
+    <ul class="img">
+      <li><img src="http://cdn.jirengu.com/book.jirengu.com/img/26.jpg"></li>
+      <li><img src="http://cdn.jirengu.com/book.jirengu.com/img/25.jpg"></li>
+      <li><img src="http://cdn.jirengu.com/book.jirengu.com/img/24.jpg"></li>
+      <li><img src="http://cdn.jirengu.com/book.jirengu.com/img/23.jpg"></li>
+    </ul>
+    <span class="pre"><</span><span class="next">></span>
+    <ul class="bullet">
+      <li class="active"></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
+  </section>
+
+  <script>
+    var imgList = $('.roast1 .img')
+    var bullets = $('.roast1 .bullet li')
+    var imgCount = imgList.children.length
+    var imgWidth = parseInt(window.getComputedStyle(imgList.children[0]).getPropertyValue('width'))
+    var AnimateTimmer,autoTimmer
+    var pageIndex = 0
+    var isAnimate = false
+
+    addImg(imgList)
+    autoPlay()
+
+    $('.roast1 .next').addEventListener('click', function() {
+      playNext(1)
+      clearInterval(autoTimmer)
+      autoPlay()
+    })
+    $('.roast1 .pre').addEventListener('click', function() {
+      playPre(1)
+      clearInterval(autoTimmer)
+      autoPlay()
+    })
+    bullets.forEach(function(bullet) {
+      bullet.addEventListener('click', function() {
+        var index = [].indexOf.call(bullets, this)
+        clearInterval(autoTimmer)
+        autoPlay()
+        if (index > pageIndex) {
+          playNext(index - pageIndex)
+        } else if (index < pageIndex) {
+          playPre(pageIndex - index)
+        }
+      })
+    })
+    
+    function addImg(node) {
+      var firstImg = node.children[0]
+      var lastImg = node.children[node.children.length - 1]
+      node.appendChild(firstImg.cloneNode(true))
+      node.insertBefore(lastImg.cloneNode(true), firstImg)
+      node.style.width = imgWidth * (imgCount + 2) + 'px'
+    }
+    function $(selector) {
+      var node = document.querySelectorAll(selector)
+      if (node.length === 1) {
+        return node[0]
+      }
+      return node
+    }
+    function animate(node, speed, curValue, endValue, callback) {
+      AnimateTimmer = setInterval(function() {
+        if (speed < 0 && curValue > endValue) {
+          curValue += speed
+          node.style.left = curValue + 'px'
+        } else if(speed > 0 && curValue < endValue) {
+          curValue += speed
+          node.style.left = curValue + 'px'
+        } else {
+          clearInterval(AnimateTimmer)
+          callback()
+        }
+      }, 50)
+    }
+    function setBullet() {
+      for (var i = 0; i < bullets.length; i++) {
+        bullets[i].classList.remove('active')  
+      }
+      bullets[pageIndex].classList.add('active')
+    }
+    function autoPlay() {
+      autoTimmer = setInterval(function() {
+        playNext(1)
+      }, 3000)
+    }
+
+    function playNext(len) {
+      if (isAnimate) return
+      isAnimate = true
+      var speed = (imgWidth * len) / 10
+      var ListLeft = parseInt(window.getComputedStyle(imgList).getPropertyValue('left'))
+      animate(imgList, -speed, ListLeft ,ListLeft - (imgWidth * len), function() {
+        isAnimate = false
+        pageIndex += len
+        if (pageIndex === imgCount) {
+          imgList.style.left = -imgWidth + 'px'
+          pageIndex = 0
+        }
+        setBullet()
+      })
+    }
+
+    function playPre(len) {
+      if (isAnimate) return
+      isAnimate = true
+      var speed = (imgWidth * len) / 10
+      var ListLeft = parseInt(window.getComputedStyle(imgList).getPropertyValue('left'))
+      animate(imgList, speed, ListLeft ,ListLeft + imgWidth * len, function() {
+        isAnimate = false
+        pageIndex -= len
+        if (pageIndex === -1) {
+          imgList.style.left = -imgWidth * imgCount + 'px'
+          pageIndex = 3
+        }
+        setBullet()
+      })
+    }
+  </script>
+</body>
+</html>
