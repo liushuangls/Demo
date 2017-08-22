@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>jq-roasting</title>
+  <style>
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    li {
+      margin: 0;
+      padding: 0;
+    }
+
+    .roast1,
+    .roast2 {
+      position: relative;
+      width: 320px;
+      height: 240px;
+      overflow: hidden;
+      margin: 20px 0;
+    }
+    .roast1 .img {
+      position: absolute;
+      left: -320px;
+    }
+    .roast2 .img {
+      position: absolute;
+      width: 1280px;
+    }
+    .roast2 .img li {
+      display: none;
+    }
+    .roast2 .img li:first-child {
+      display: block;
+    }
+    .img li {
+      float: left;
+      opacity: 1;
+    }
+    .img img {
+      width: 320px;
+      height: 240px;
+    }
+    .pre,
+    .next {
+      position: absolute;
+      top: 50%;
+      margin-top: -15px;
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      border: 1px solid #fff;
+      border-radius: 50%;
+      font-size: 20px;
+      color: #fff;
+      line-height: 30px;
+      text-align: center;
+      cursor: pointer;
+      z-index: 1;
+    }
+    .pre {
+      left: 10px;
+    }
+    .next {
+      right: 10px;
+    }
+
+    .bullet {
+      position: absolute;
+      bottom: 20px;
+      width: 100%;
+      text-align: center;
+    }
+    .bullet > li {
+      display: inline-block;
+      width: 20px;
+      height: 6px;
+      margin-left: 4px;
+      border: 1px solid #fff;
+      border-radius: 2px;
+      cursor: pointer;
+    }
+    .bullet .active {
+      background-color: #ccc;
+    }
+  </style>
+  <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+  <section class="roast1">
+    <ul class="img">
+      <li><img src="http://cdn.jirengu.com/book.jirengu.com/img/26.jpg"></li>
+      <li><img src="http://cdn.jirengu.com/book.jirengu.com/img/25.jpg"></li>
+      <li><img src="http://cdn.jirengu.com/book.jirengu.com/img/24.jpg"></li>
+      <li><img src="http://cdn.jirengu.com/book.jirengu.com/img/23.jpg"></li>
+    </ul>
+    <span class="pre"><</span><span class="next">></span>
+    <ul class="bullet">
+      <li class="active"></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
+  </section>
+  <section class="roast2">
+      <ul class="img">
+        <li><img src="http://cdn.jirengu.com/book.jirengu.com/img/26.jpg"></li>
+        <li><img src="http://cdn.jirengu.com/book.jirengu.com/img/25.jpg"></li>
+        <li><img src="http://cdn.jirengu.com/book.jirengu.com/img/24.jpg"></li>
+        <li><img src="http://cdn.jirengu.com/book.jirengu.com/img/23.jpg"></li>
+      </ul>
+      <span class="pre"><</span><span class="next">></span>
+      <ul class="bullet">
+        <li class="active"></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </section>
+
+    <script>
+      var imgCount = $('.roast1 .img li').length
+      var imgWidth = $('.img img').width()
+      var pageIndex = 0
+      var isAnimate = false
+      var timmer, timmer2
+      var pageIndex2 = 0
+      var isAnimate2 = false
+
+      addImg($('.roast1 .img'))
+      autoPlay(1)
+      autoPlay(2)
+      
+      // 左右轮播事件
+      $('.roast1 .next').on('click', function() {
+        playNext(1)
+        clearInterval(timmer)
+        autoPlay(1)  
+      })
+      $('.roast1 .pre').on('click', function() {
+        playPre(1)
+        clearInterval(timmer)
+        autoPlay(1)  
+      })
+      $('.roast1 .bullet li').on('click', function() {
+        clickBullet($(this), pageIndex, 1)
+        clearInterval(timmer)
+        autoPlay(1)  
+      })
+
+      // 渐变轮播事件
+      $('.roast2 .next').on('click', function() {
+        playNext2(1)
+        clearInterval(timmer2)
+        autoPlay(2)
+      })
+      $('.roast2 .pre').on('click', function() {
+        playPre2(1)
+        clearInterval(timmer2)
+        autoPlay(2)
+      })
+      $('.roast2 .bullet li').on('click', function() {
+        clickBullet($(this), pageIndex2, 2)
+        clearInterval(timmer2)
+        autoPlay(2)
+      })
+
+      // 公用接口
+      function addImg($lis) {
+        $lis.append($lis.children().first().clone())
+        $lis.prepend($lis.children().eq(imgCount - 1).clone())
+        $lis.width((imgCount + 2) * imgWidth)
+      }
+      function setBullet($bullets, index) {
+        $bullets.eq(index).addClass('active')
+            .siblings().removeClass('active')
+      }
+      function clickBullet($bullet, pageIndex, num) {
+        var index = $bullet.index()
+        if (index > pageIndex) {
+          if (num === 1) playNext(index - pageIndex)
+          if (num === 2) playNext2(index - pageIndex)
+        } else if (index < pageIndex) {
+          if (num === 1) playPre(pageIndex - index)
+          if (num === 2) playPre2(pageIndex - index)
+        }
+      }
+      function autoPlay(num) {
+        if (num === 1) {
+          timmer = setInterval(function () {
+            playNext(1)
+          }, 3000)
+        } else if(num === 2) {
+          timmer2 = setInterval(function () {
+            playNext2(1)
+          }, 3000)
+        }
+      }
+
+      // 左右轮播接口
+      function playNext(len) {
+        if(isAnimate) return
+        isAnimate = true
+        $('.roast1 .img').animate({
+          left: '-='+len*imgWidth
+        }, function() {
+          pageIndex += len
+          if (pageIndex === imgCount) {
+            $('.roast1 .img').css({left: -imgWidth})
+            pageIndex = 0
+          }
+          isAnimate = false
+          setBullet($('.roast1 .bullet li'), pageIndex)
+        })
+      }
+      function playPre(len) {
+        if(isAnimate) return
+        isAnimate = true
+        $('.roast1 .img').animate({
+          left: '+='+len*imgWidth
+        }, function() {
+          isAnimate = false
+          if (pageIndex === 0) {
+            $('.roast1 .img').css({left: -imgWidth*imgCount})
+            pageIndex = imgCount - 1
+            setBullet($('.roast1 .bullet li'), pageIndex)
+            return
+          }
+          pageIndex -= len
+          setBullet($('.roast1 .bullet li'), pageIndex)
+        })
+      }
+      
+      // 渐变轮播接口
+      function playNext2(len) {
+        if(isAnimate2) return
+        isAnimate2 = true
+        var $imgs = $('.roast2 .img li')
+        $imgs.eq(pageIndex2).fadeOut(500)
+        pageIndex2 += len
+        if (pageIndex2 === imgCount) {
+          pageIndex2 = 0
+        }
+        $imgs.eq(pageIndex2).fadeIn(500, function() {
+          isAnimate2 = false
+        })
+        setBullet($('.roast2 .bullet li'), pageIndex2)
+        
+      }
+
+      function playPre2(len) {
+        if(isAnimate2) return
+        isAnimate2 = true
+        var $imgs = $('.roast2 .img li')
+        $imgs.eq(pageIndex2).fadeOut(500)
+        pageIndex2 -= len
+        if (pageIndex2 < 0) {
+          pageIndex2 = imgCount - 1
+        }
+        $imgs.eq(pageIndex2).fadeIn(500, function () {
+          isAnimate2 = false
+        })
+        setBullet($('.roast2 .bullet li'), pageIndex2)
+      }
+    </script>
+</body>
+</html>
