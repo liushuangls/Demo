@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>瀑布流布局</title>
+  <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <style>
+    .item {
+      position: absolute;
+      width: 200px;
+      margin-left: 15px;
+      margin-top: 15px;
+      transition: all 1s;
+    }
+    .h1 {
+      background-color: #f00;
+      height: 400px;
+    }
+    .h2 {
+      background-color: #0f0;
+      height: 300px;
+    }
+    .h3 {
+      background-color: #00f;
+      height: 200px;
+    }
+    .h4 {
+      background-color: #ff0;
+      height: 150px;
+    }
+  </style>
+</head>
+<body>
+  <div class="item h1">1</div>
+  <div class="item h2">2</div>
+  <div class="item h3">3</div>
+  <div class="item h4">4</div>
+  <div class="item h1">5</div>
+  <div class="item h1">6</div>
+  <div class="item h2">7</div>
+  <div class="item h2">8</div>
+  <div class="item h2">9</div>
+  <div class="item h3">10</div>
+  <div class="item h3">11</div>
+  <div class="item h3">12</div>
+  <div class="item h4">13</div>
+  <div class="item h4">14</div>
+
+  <script>
+    // 封装
+    var WaterFull = (function () {
+      function init() {
+        waterFull()
+        $(window).resize(function () {
+          waterFull()
+        })
+      }
+
+      function waterFull() {
+        // 屏幕中能放几条瀑布流
+        var colLength = Math.floor($(window).width() / $('.item').outerWidth(true))
+        // 统计每条瀑布流的高度
+        var itemArr = []
+        for (var i = 0; i < colLength; i++) {
+          itemArr[i] = 0
+        }
+        $('.item').each(function () {
+          // 获取最短瀑布流的高度
+          var minValue = Math.min.apply(null, itemArr)
+          // 根据最短高度获取最短瀑布流的index
+          var minIndex = itemArr.indexOf(minValue)
+          // 挨个摆放DOM元素
+          $(this).css({
+            // 根据最短索引确定摆放的横坐标
+            left: minIndex * $(this).outerWidth(true),
+            // 根据最短值确定摆放的纵坐标
+            top: minValue
+            })
+            // 更新最短值
+            itemArr[minIndex] += $(this).outerHeight(true)
+          })
+        }
+
+      return {
+        init: init
+      }
+    })()
+
+    WaterFull.init()
+  </script>
+</body>
+</html>
