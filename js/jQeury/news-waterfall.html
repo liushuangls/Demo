@@ -102,7 +102,7 @@
       function getData(page, num) {
         var script = document.createElement('script')
         script.src = 'https://platform.sina.com.cn/slide/album_tech?jsoncallback=loadPage&app_key=1271687855&num=' + num +'&page='+ page
-        script.class = 'jsonp'
+        script.classList.add('jsonp')
         $('body').append(script)
         $('.jsonp').remove()
       }
