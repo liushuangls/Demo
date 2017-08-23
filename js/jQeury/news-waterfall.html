@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>新闻</title>
+  <style>
+    html, body, ul, li, div {
+      box-sizing: border-box;
+    }
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    h3 {
+      margin: 0;
+      padding: 0;
+      font-size: 18px;
+    }
+    a {
+      text-decoration: none;
+      color: black;
+    }
+
+    .ct {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .waterfall {
+      position: relative;
+    }
+    .waterfall li {
+      position: absolute;
+      width: 280px;
+      padding: 10px;
+      margin-right: 30px;
+      margin-bottom: 30px;
+      border: 1px solid #ccc;
+      transition: all 1s;
+    }
+    .waterfall p {
+      font-size: 12px;
+      line-height: 1.5;
+      color: #888;
+    }
+    .waterfall hr {
+      background-color: #eee;
+    }
+    .waterfall img {
+      width: 260px;
+    }
+    .load {
+      height: 30px;
+      text-align: center;
+      color: red;
+      font-size: 24px;
+    }
+  </style>
+</head>
+<body>
+  <div class="ct">
+    <ul class="waterfall">
+      <!-- <li>
+        <a href="#">
+            <img src="http://n.sinaimg.cn/tech/transform/20170823/Z4RR-fykcypq4094302.jpg">
+        </a>
+        <h3>5亿年前原始蠕虫长刺捕食猎物</h3>
+        <h3>
+        <p>5亿多年前，一种海洋蠕虫在海洋深处游动，它们利用50个尖脊刺捕捉小型猎物。</p>
+      </li> -->
+    </ul>
+    <div class="load">loading...</div>
+  </div>
+
+  <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script>
+      
+      
+
+      var page = 1
+      var num = 15
+      var timmer
+      
+
+      getData(page, num)
+      $(window).on('scroll', function() {
+        if (timmer) clearTimeout(timmer)
+        timmer = setTimeout(function() {
+          if (isVisible($('.load'))) {
+            getData(page, num)
+          }
+        }, 30)
+      })
+      $(window).on('resize', function () {
+        console.log('1');
+        waterfall()
+      })
+
+      
+      function getData(page, num) {
+        var script = document.createElement('script')
+        script.src = 'http://platform.sina.com.cn/slide/album_tech?jsoncallback=loadPage&app_key=1271687855&num=' + num +'&page='+ page
+        script.class = 'jsonp'
+        $('body').append(script)
+        $('.jsonp').remove()
+      }
+      function loadPage(data) {
+        if (data.status.code === '0') {
+          $.each(data.data, function(index, news) {
+            var $newList = getList(news)
+            $newList.find('img').on('load', function() {
+              $('.waterfall').append($newList)
+              waterfall()
+            })
+          })
+          page++
+        } else {
+          console.log('getdata error')
+        }
+      }
+      function waterfall() {
+        var listWidth = $('.waterfall li').outerWidth(true)
+        var colLength = parseInt($('.waterfall').width() / listWidth) 
+        var itemArr = []
+        for (var i = 0; i < colLength; i++) {
+          itemArr[i] = 0
+        }
+        
+        $('.waterfall li').each(function() {
+          var minValue = Math.min.apply(null, itemArr)
+          var minIndex = itemArr.indexOf(minValue)
+
+          $(this).css({
+            left: minIndex * listWidth,
+            top: minValue
+          })
+          itemArr[minIndex] += $(this).outerHeight(true)
+          $('.waterfall').height(Math.max.apply(null, itemArr))
+        })
+      }
+      function getList(news) {
+        var newsList = '<li><a target="_blank" href="'+news.url+'">'
+        newsList += '<img src="'+news.img_url+'"></a>'
+        newsList += '<h3>' + news.name + '</h3>'
+        newsList += '<hr><p>' + news.short_intro + '</p></li>'
+        return $(newsList)
+      }
+      function isVisible($node) {
+        var scrollTop = $(window).scrollTop()
+        var windowVisible = scrollTop + $(window).height()
+        var offsetTop = $node.offset().top
+        if (offsetTop < windowVisible) {
+          return true
+        }
+        return false
+      }
+  </script>
+</body>
+</html>
