@@ -14,7 +14,7 @@ function updateDate(weather) {
   $('#now-wind').text(weather.now.wind)
   $('#now-quality').text(weather.now.quality)
 
-  $('#tem-day').text(weather.today.day)
+  $('.tem-day').text(weather.today.day)
   changeImg($('.tem-during'), future[0].code)
   $('.tem .rain').text(future[0].text)
   $('.tem .high').text(future[0].high)
