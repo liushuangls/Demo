@@ -21,7 +21,7 @@ function updateDate(weather) {
   $('.tem .low').text(future[0].low)
   $('.tem .wind').text(future[0].wind)
   $('#sunrise').text(weather.today.sunrise)
-  $('#sunrise').text(weather.today.sunset)
+  $('#sunset').text(weather.today.sunset)
 
   setFuture($('#one'),future, 0)
   setFuture($('#two'),future, 1)
