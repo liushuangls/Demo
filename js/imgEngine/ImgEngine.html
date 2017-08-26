@@ -115,9 +115,7 @@
       if (q) {
         page = 1
         main.innerHTML = ''
-        getData(q).then(setData).catch(function() {
-          load.textContent = '没有数据！'
-        })
+        getData(q).then(setData)
       } else {
         alert('查询为空！')
       }
@@ -129,9 +127,7 @@
       timmer = setTimeout(function () {
         if (isVisible()) {
           q = document.querySelector('#query').value
-          getData(q).then(setData).catch(function() {
-            load.textContent = '没有数据！'
-          })
+          getData(q).then(setData)
         }
       }, 30)
     }
@@ -148,10 +144,12 @@
         xhr.send()
         xhr.onload = function() {
           if (this.status >= 200 && this.status < 300 || this.status === 304) {
+            if (JSON.parse(this.response).totalHits === 0) {
+              load.textContent = '没有数据，请输入中文或英文关键字'
+              return
+            }
             page++
             resole(JSON.parse(this.response).hits)
-          } else {
-            reject()
           }
         }
       })
@@ -200,7 +198,7 @@
       var scrollTop = document.body.scrollTop
       var windowVisible = scrollTop + window.screen.availHeight
       var boxOffset = document.querySelector('.loading').offsetTop
-      if (boxOffset <= windowVisible) {
+      if (boxOffset <= windowVisible && boxOffset > 600) {
         return true
       }
       return false
