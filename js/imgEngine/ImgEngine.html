@@ -98,111 +98,97 @@
   <div class="loading">loading...</div>
   
   <script>
-    var colWidth = 0
-    var colList = []
-    var q
-    var load = document.querySelector('.loading')
-    var main = document.querySelector('main')
-    var search = document.querySelector('#search')
-    var mainWidth = parseInt(window.getComputedStyle(main).width)
-    var page = 1
-    var timmer, timmer2
-    
-    getData(q).then(setData)
 
-    search.onclick = function() {
-      q = document.querySelector('#query').value
-      if (q) {
-        page = 1
-        main.innerHTML = ''
-        getData(q).then(setData)
-      } else {
-        alert('查询为空！')
-      }
-    }
-    window.onscroll = function () {
-      if (timmer) {
-        clearTimeout(timmer)
-      }
-      timmer = setTimeout(function () {
-        if (isVisible()) {
-          q = document.querySelector('#query').value
-          getData(q).then(setData)
-        }
-      }, 30)
-    }
-    window.onresize = function () {
-      if (timmer2) {
-        clearTimeout(timmer2)
-      }
-      timmer2 = setTimeout(function () {
-        location.reload()
-      }, 80)
-    }
+    /* 
+      - 使用说明： 只能使用padding来形成图片间的空隙 img的包裹标签figure需要设置box-sizing: border-box;
+      - 如使用不同的id或class可更改init函数，以及enquiries和lazyLoading函数里的q
+     */
 
-    function getData(query) {
-      return new Promise(function(resole, reject) {
-        var xhr = new XMLHttpRequest()
-        if (query) {
-          var url = 'https://pixabay.com/api/?key=6269447-fa9b43b212ca5ef1dc2271efa&lang=zh,en&page='+page+'&q='+query
-        } else {
-          var url = 'https://pixabay.com/api/?key=6269447-fa9b43b212ca5ef1dc2271efa&lang=zh,en&page='+page
-        }
-        xhr.open('GET', url)
-        xhr.send()
-        xhr.onload = function() {
-          if (this.status >= 200 && this.status < 300 || this.status === 304) {
-            if (JSON.parse(this.response).totalHits === 0) {
-              load.textContent = '没有数据，请输入中文或英文关键字'
-              return
-            }
-            page++
-            resole(JSON.parse(this.response).hits)
-          }
-        }
+    function ImgEngine() {
+      this.init()
+      this.getData(this.q, function(data, self) {
+        self.render(data, self)
       })
+      this.enquiries()
+      this.lazyLoading()
+      this.resize()      
     }
-
-    function setData(data) {
+    // 初始化需要调用的参数
+    ImgEngine.prototype.init = function() {
+      this.colWidth = 0
+      this.colList = []
+      this.q
+      this.load = document.querySelector('.loading')
+      this.main = document.querySelector('main')
+      this.search = document.querySelector('#search')
+      this.mainWidth = parseInt(window.getComputedStyle(this.main).width)
+      this.page = 1
+      this.timmer 
+      this.timmer2
+    }
+    // 获取数据
+    ImgEngine.prototype.getData = function(query, callback) {
+      var self = this
+      var xhr = new XMLHttpRequest()
+      if (query) {
+        var url = 'https://pixabay.com/api/?key=6269447-fa9b43b212ca5ef1dc2271efa&lang=zh,en&page='+this.page+'&q='+query
+      } else {
+        var url = 'https://pixabay.com/api/?key=6269447-fa9b43b212ca5ef1dc2271efa&lang=zh,en&page='+this.page
+      }
+      xhr.open('GET', url)
+      xhr.send()
+      xhr.onload = function() {
+        if (this.status >= 200 && this.status < 300 || this.status === 304) {
+          if (JSON.parse(this.response).totalHits === 0) {
+            load.textContent = '没有数据，请输入中文或英文关键字'
+            return
+          }
+          self.page++
+          callback(JSON.parse(this.response).hits, self)
+        }
+      }
+    }
+    // 计算布局数据
+    ImgEngine.prototype.render = function (data, self) {
       data.forEach(function (x) {
         x.setHeight = 240
         x.setWidth = (x.webformatWidth / x.webformatHeight) * x.setHeight
-        if (x.setWidth + colWidth > mainWidth) {
-          layout(colList, colWidth)
-          colList = []
-          colList.push(x)
-          colWidth = x.setWidth
+        if (x.setWidth + self.colWidth > self.mainWidth) {
+          self.layout(self.colList, self.colWidth)
+          self.colList = []
+          self.colList.push(x)
+          self.colWidth = x.setWidth
         } else {
-          colList.push(x)
-          colWidth += x.setWidth
+          self.colList.push(x)
+          self.colWidth += x.setWidth
         }
       })
-      if (colList.length > 0) {
-        if (colList.length === 1) {
-          colList[1] = data[0]
-          colWidth += data[0].setWidth
+      if (self.colList.length > 0) {
+        if (self.colList.length === 1) {
+          self.colList[1] = data[0]
+          self.colWidth += data[0].setWidth
         }
-        layout(colList, colWidth)
-        colWidth = 0
-        colList = []
+        self.layout(self.colList, self.colWidth)
+        self.colWidth = 0
+        self.colList = []
       }
     }
-
-    function layout(colList, colWidth) {
+    // 页面布局
+    ImgEngine.prototype.layout = function (colList, colWidth) {
+      var self = this
       colList.forEach(function(x) {
         var figure = document.createElement('figure')
         var img = document.createElement('img')
         img.src = x.webformatURL
         figure.appendChild(img)
         // 不开开发者工具获取的mainWidth比打开多了17px，不知道为什么？？
-        fHeight = ((mainWidth - 17) / colWidth) * x.setHeight
+        fHeight = ((self.mainWidth - 17) / colWidth) * x.setHeight
         figure.style.height = fHeight + 'px'
         figure.style.width = (x.webformatWidth / x.webformatHeight) * fHeight + 'px'
-        main.appendChild(figure)
+        self.main.appendChild(figure)
       })
     }
-
-    function isVisible() {
+    ImgEngine.prototype.isVisible = function () {
       var scrollTop = document.body.scrollTop
       var windowVisible = scrollTop + window.screen.availHeight
       var boxOffset = document.querySelector('.loading').offsetTop
@@ -211,6 +197,53 @@
       }
       return false
     }
+    // 查询
+    ImgEngine.prototype.enquiries = function() {
+      var self = this
+      this.search.onclick = function() {
+        q = document.querySelector('#query').value
+        if (q) {
+          self.page = 1
+          self.main.innerHTML = ''
+          self.getData(q, function(data, self) {
+            self.render(data, self)
+          })
+        } else {
+          alert('查询为空！')
+        }
+      }
+    }
+    // 懒加载
+    ImgEngine.prototype.lazyLoading = function() {
+      var self = this
+      window.onscroll = function () {
+        if (self.timmer) {
+          clearTimeout(self.timmer)
+        }
+        self.timmer = setTimeout(function () {
+          if (self.isVisible()) {
+            q = document.querySelector('#query').value
+            self.getData(q, function (data, self) {
+              self.render(data, self)
+            })
+          }
+        }, 30)
+      }
+    }
+    // 改变窗口大小刷新页面（重新布局）
+    ImgEngine.prototype.resize = function () {
+      var self = this
+      window.onresize = function () {
+        if (self.timmer2) {
+          clearTimeout(self.timmer2)
+        }
+        self.timmer2 = setTimeout(function () {
+          location.reload()
+        }, 80)
+      }
+    }
+
+    var p1 = new ImgEngine()
   </script>
 </body>
 </html>
