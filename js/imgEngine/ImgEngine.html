@@ -106,7 +106,7 @@
     var search = document.querySelector('#search')
     var mainWidth = parseInt(window.getComputedStyle(main).width)
     var page = 1
-    var timmer
+    var timmer, timmer2
     
     getData(q).then(setData)
 
@@ -130,6 +130,14 @@
           getData(q).then(setData)
         }
       }, 30)
+    }
+    window.onresize = function () {
+      if (timmer2) {
+        clearTimeout(timmer2)
+      }
+      timmer2 = setTimeout(function () {
+        location.reload()
+      }, 80)
     }
 
     function getData(query) {
