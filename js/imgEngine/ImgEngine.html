@@ -101,6 +101,7 @@
     var colWidth = 0
     var colList = []
     var q
+    var load = document.querySelector('.loading')
     var main = document.querySelector('main')
     var search = document.querySelector('#search')
     var mainWidth = parseInt(window.getComputedStyle(main).width)
@@ -114,7 +115,9 @@
       if (q) {
         page = 1
         main.innerHTML = ''
-        getData(q).then(setData)
+        getData(q).then(setData).catch(function() {
+          load.textContent = '没有数据！'
+        })
       } else {
         alert('查询为空！')
       }
@@ -126,7 +129,9 @@
       timmer = setTimeout(function () {
         if (isVisible()) {
           q = document.querySelector('#query').value
-          getData(q).then(setData)
+          getData(q).then(setData).catch(function() {
+            load.textContent = '没有数据！'
+          })
         }
       }, 30)
     }
@@ -145,6 +150,8 @@
           if (this.status >= 200 && this.status < 300 || this.status === 304) {
             page++
             resole(JSON.parse(this.response).hits)
+          } else {
+            reject()
           }
         }
       })
@@ -181,7 +188,7 @@
         var img = document.createElement('img')
         img.src = x.webformatURL
         figure.appendChild(img)
-        // 打开开发者工具获取的mainWidth比不带少17，不知道为什么？？
+        // 不开开发者工具获取的mainWidth比打开多了17px，不知道为什么？？
         fHeight = ((mainWidth - 17) / colWidth) * x.setHeight
         figure.style.height = fHeight + 'px'
         figure.style.width = (x.webformatWidth / x.webformatHeight) * fHeight + 'px'
