@@ -59,26 +59,50 @@
       <li>ct3</li>
     </ul>
   </div>
+  <div class="tab-ct">
+    <ul class="tab clearfix">
+      <li class="active">tab1</li>
+      <li>tab2</li>
+      <li>tab3</li>
+    </ul>
+    <ul class="ct">
+      <li class="active">ct1</li>
+      <li>ct2</li>
+      <li>ct3</li>
+    </ul>
+  </div>
 
   <script>
-    var tabs = document.querySelectorAll('.tab>li')
-    var cts = document.querySelectorAll('.ct>li')
-
-    tabs.forEach(function (tab) {
-      tab.addEventListener('click', function () {
-        tabs.forEach(function (t) {
-          t.classList.remove('active')
+    function Tab(tabNode) {
+      this.init(tabNode)
+      this.bind()
+    }
+    Tab.prototype.bind = function () {
+      var self = this
+      this.tabs.forEach(function (tab) {
+        tab.addEventListener('click', function () {
+          self.tabs.forEach(function (t) {
+            t.classList.remove('active')
+          })
+          this.classList.add('active')
+          var index = [].indexOf.call(self.tabs, this)
+          self.panels.forEach(function (ct) {
+            ct.classList.remove('active')
+          })
+          self.panels[index].classList.add('active')
         })
-
-        this.classList.add('active')
-        var index = [].indexOf.call(tabs, this)
-
-        cts.forEach(function (ct) {
-          ct.classList.remove('active')
-        })
-        cts[index].classList.add('active')
       })
-    })
+    }
+    Tab.prototype.init = function(tabNode) {
+      this.panels = tabNode.querySelectorAll('.ct>li')
+      this.tabs = tabNode.querySelectorAll('.tab>li')
+    }
+
+    var tab1 = document.querySelectorAll('.tab-ct')[0]
+    var tab2 = document.querySelectorAll('.tab-ct')[1]
+
+    new Tab(tab1)
+    new Tab(tab2)
   </script>
 </body>
 </html>

@@ -63,17 +63,44 @@ function insertSort(arr) {
 // （3）对"基准"左边和右边的两个子集，不断重复第一步和第二步，直到所有子集只剩下一个元素为止。
 
 function quickSort(arr) {
-  if (arr.length <= 1) { return arr; }
-  var pivotIndex = Math.floor(arr.length / 2);
-  var pivot = arr.splice(pivotIndex, 1)[0];
-  var left = [];
-  var right = [];
-  for (var i = 0; i < arr.length; i++){
-      if (arr[i] < pivot) {
-      left.push(arr[i]);
+  if (arr.length <= 1) return arr
+  var pivotIndex = Math.floor(arr.length / 2)
+  var pivot = arr.splice(pivotIndex, 1)[0]
+  var left = []
+  var right = []
+  
+  for (var i = 0; i < arr.length; i++) {
+    if (arr[i] < pivot) {
+      arr.count++
+      left.push(arr[i])
     } else {
-      right.push(arr[i]);
+      arr.count++
+      right.push(arr[i])
     }
   }
-  return quickSort(left).concat([pivot], quickSort(right));
+
+  return quickSort(left).concat([pivot], quickSort(right))
 }
+
+// 5.计数排序
+// 计数排序（Counting sort）是一种稳定的线性时间排序算法。计数排序使用一个额外的数组C，其中第i个元素是待排序数组A中值等于i的元素的个数。然后根据数组C来将A中的元素排到正确的位置。
+function countingSort(arr) {
+  var counting = []
+  for (var i = 0, len = arr.length; i < len; i++) {
+    if (counting[arr[i]]) {
+      counting[arr[i]++]
+    } else {
+      counting[arr[i]] = 1
+    }
+  }
+  arr = []
+  for (var x in counting) {
+    for (var j = 0, len2 = counting[x]; j < len2; j++) {
+      arr.push(x)
+    }
+  }
+  return arr
+}
+
+// 6.基数排序
+// 基数排序（英语：Radix sort）是一种非比较型整数排序算法，其原理是将整数按位数切割成不同的数字，然后按每个位数分别比较。

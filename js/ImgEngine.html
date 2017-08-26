@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>图片引擎</title>
+  <link rel="icon" href="../favicon.ico" mce_href="../favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="../favicon.ico" mce_href="../favicon.ico" type="image/x-icon">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      position: relative;
+      padding: 35px;
+      text-align: center;
+      background-image: url('https://cdn.pixabay.com/index/2017/08/16/10-19-06-241_1440x480.jpg');
+    }
+    header h1 {
+      margin-bottom: 25px;
+      font-size: 50px;
+      color: #fff;
+      font-weight: normal;
+    }
+    header h2 {
+      font-size: 22px;
+      font-weight: normal;
+      color: #fff;
+    }
+    header .search {
+      margin: 50px auto;
+      width: 100%;
+      max-width: 540px;
+      padding: 2px;
+      background-color: #fff;
+      border: 2px solid rgba(0, 0, 0, .3);
+      text-align: left;
+    }
+    header input {
+      width: 80%;
+      border: none;
+      padding: 12px 0 12px 15px;
+      line-height: 23px;
+      font: normal 18px arial,sans-serif;
+      outline: none;
+    }
+    header button {
+      float: right;
+      width: 60px;
+      height: 45px;
+      border: none;
+      background-color: #008ddf;
+      cursor: pointer;
+      background-image: url('./搜索.png');
+      background-repeat: no-repeat;
+      background-position: 12px 5px;
+    }
+    main {
+      margin-top: 60px;
+      padding: 22px 20px;
+      background-color: #f7f8fa;
+    }
+    main::after {
+      content: '';
+      display: block;
+      clear: both;
+    }
+    main figure {
+      float: left;
+      box-sizing: border-box;
+      padding: 5px;
+    }
+    main img {
+      height: 100%;
+      width: 100%;
+    }
+    .loading {
+      height: 30px;
+      text-align: center;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>免费的高清图片</h1>
+    <h2>共有约 1100000 张免费的照片、矢量文件和艺术插图</h2>
+    <div class="search">
+      <input id="query" type="text" placeholder="关键字搜索图片">
+      <button id="search"></button>
+    </div>
+  </header>
+  <main>
+      
+  </main>
+  <div class="loading">loading...</div>
+  
+  <script>
+    var colWidth = 0
+    var colList = []
+    var q
+    var main = document.querySelector('main')
+    var search = document.querySelector('#search')
+    var mainWidth = parseInt(window.getComputedStyle(main).width)
+    var page = 1
+    var timmer
+    
+    getData(q).then(setData)
+
+    search.onclick = function() {
+      q = document.querySelector('#query').value
+      if (q) {
+        page = 1
+        main.innerHTML = ''
+        getData(q).then(setData)
+      } else {
+        alert('查询为空！')
+      }
+    }
+    window.onscroll = function () {
+      if (timmer) {
+        clearTimeout(timmer)
+      }
+      timmer = setTimeout(function () {
+        if (isVisible()) {
+          q = document.querySelector('#query').value
+          getData(q).then(setData)
+        }
+      }, 30)
+    }
+
+    function getData(query) {
+      return new Promise(function(resole, reject) {
+        var xhr = new XMLHttpRequest()
+        if (query) {
+          var url = 'https://pixabay.com/api/?key=6269447-fa9b43b212ca5ef1dc2271efa&lang=zh,en&page='+page+'&q='+query
+        } else {
+          var url = 'https://pixabay.com/api/?key=6269447-fa9b43b212ca5ef1dc2271efa&lang=zh,en&page='+page
+        }
+        xhr.open('GET', url)
+        xhr.send()
+        xhr.onload = function() {
+          if (this.status >= 200 && this.status < 300 || this.status === 304) {
+            page++
+            resole(JSON.parse(this.response).hits)
+          }
+        }
+      })
+    }
+
+    function setData(data) {
+      data.forEach(function (x) {
+        x.setHeight = 240
+        x.setWidth = (x.webformatWidth / x.webformatHeight) * x.setHeight
+        if (x.setWidth + colWidth > mainWidth) {
+          layout(colList, colWidth)
+          colList = []
+          colList.push(x)
+          colWidth = x.setWidth
+        } else {
+          colList.push(x)
+          colWidth += x.setWidth
+        }
+      })
+      if (colList.length > 0) {
+        if (colList.length === 1) {
+          colList[1] = data[0]
+          colWidth += data[0].setWidth
+        }
+        layout(colList, colWidth)
+        colWidth = 0
+        colList = []
+      }
+    }
+
+    function layout(colList, colWidth) {
+      colList.forEach(function(x) {
+        var figure = document.createElement('figure')
+        var img = document.createElement('img')
+        img.src = x.webformatURL
+        figure.appendChild(img)
+        // 打开开发者工具获取的mainWidth比不带少17，不知道为什么？？
+        fHeight = ((mainWidth - 17) / colWidth) * x.setHeight
+        figure.style.height = fHeight + 'px'
+        figure.style.width = (x.webformatWidth / x.webformatHeight) * fHeight + 'px'
+        main.appendChild(figure)
+      })
+    }
+
+    function isVisible() {
+      var scrollTop = document.body.scrollTop
+      var windowVisible = scrollTop + window.screen.availHeight
+      var boxOffset = document.querySelector('.loading').offsetTop
+      if (boxOffset <= windowVisible) {
+        return true
+      }
+      return false
+    }
+  </script>
+</body>
+</html>
