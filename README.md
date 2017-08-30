@@ -1,10 +1,10 @@
 # 一些个人小项目
-> [ajax+木桶布局+懒加载实现图片搜索引擎](https://liushuangbill.github.io/demos/js/imgEngine/ImgEngine)
+> [ajax+木桶布局+懒加载实现图片搜索引擎](https://liushuangbill.github.io/projects/js/imgEngine/ImgEngine)
 
-> [ajax+瀑布流布局+懒加载实现新闻页面](https://liushuangbill.github.io/demos/js/jQeury/news-waterfall.html)
+> [ajax+瀑布流布局+懒加载实现新闻页面](https://liushuangbill.github.io/projects/js/jQeury/news-waterfall.html)
 
-> [ajax实现定位+天气查询](https://liushuangbill.github.io/demos/node/server/www/weather/weather.html)
+> [ajax实现定位+天气查询](https://liushuangbill.github.io/projects/node/server/www/weather/weather.html)
 
-> [js实现多种轮播](https://liushuangbill.github.io/demos/js/roasting)
+> [js实现多种轮播](https://liushuangbill.github.io/projects/js/roasting)
 
-> [20行实现一个模板引擎](https://github.com/LiuShuangBill/demos/blob/master/%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E/template.js)
+> [20行实现一个模板引擎](https://github.com/LiuShuangBill/projects/blob/master/%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E/template.js)
