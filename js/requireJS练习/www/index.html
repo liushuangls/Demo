@@ -31,20 +31,7 @@
   <button id="load-btn">加载更多</button>
   <button id="Gotop">&uarr;</button>
 
-  <script data-main="./js/main" src="./js/require.js"></script>
-  <script>
-    require.config({
-      paths: {
-        'jquery': 'jquery-3.2.1.min'
-      }
-    })
-
-    require(['jquery', 'rotation', 'waterfalls'], 
-      function($, Rotation, waterfall) {
-        new Rotation(document.querySelector('.g-header'))
-        waterfall.getData()
-        waterfall.bind()
-      })
-  </script>
+  <!-- <script data-main="./js/main" src="./js/require.js"></script> -->
+  <script data-main="./index.min.js" src="./js/require.js"></script>
 </body>
 </html>

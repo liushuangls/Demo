@@ -3,7 +3,7 @@ define(['jquery'], function($) {
     var page = 1
     var colLength = Math.floor($(window).width() / Width)
     var arr = []
-    for (let i = 0; i < colLength; i++) {
+    for (var i = 0; i < colLength; i++) {
       arr[i] = 0
     }
     function getData() {
@@ -28,8 +28,8 @@ define(['jquery'], function($) {
     }
     function layout(html) {
       html.forEach(function(x) {
-        let minHeight = Math.min.apply(null, arr)
-        let minIndex = arr.indexOf(minHeight)
+        var minHeight = Math.min.apply(null, arr)
+        var minIndex = arr.indexOf(minHeight)
         $(x).css({
           left: minIndex * $(x).width(),
           top: minHeight
