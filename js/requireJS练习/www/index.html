@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>requirejs</title>
+  <link rel="stylesheet" href="./css/main.css">
+</head>
+<body>
+  <header class="g-header">
+    <div class="g-header-win">
+      <ul class="g-header-rotation">
+        <li><img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1504669997&di=e0b0f7c1d4cd3543319c7044a1a1660f&imgtype=jpg&er=1&src=http%3A%2F%2Ft1.niutuku.com%2F960%2F45%2F45-74265.jpg"></li>
+        <li><img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1504670029&di=77d940e78fa545d814006adbe027ea18&imgtype=jpg&er=1&src=http%3A%2F%2Fimg311.ph.126.net%2F78Lk0q2PjGqVsyXlEny84w%3D%3D%2F3821022808847262428.bmp"></li>
+        <li><img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1504075330086&di=55e09d72c6b53c96b92ad8c6f36f1d2f&imgtype=0&src=http%3A%2F%2Ft1.niutuku.com%2F960%2F42%2F42-418529.jpg"></li>
+        <li><img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1504075356060&di=44ef09bcca8a57e5c9b2a2ff51a8a6e0&imgtype=0&src=http%3A%2F%2Fg.hiphotos.baidu.com%2Fzhidao%2Fpic%2Fitem%2Fb64543a98226cffce8488d99ba014a90f603eabf.jpg"></li>
+      </ul>
+    </div>
+    <span class='g-header-pre'><</span>
+    <span class='g-header-next'>></span>
+    <ul class="g-header-bullets">
+      <li class="active"></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
+  </header>
+  <main class="waterfalls">
+  </main>
+  <button id="load-btn">加载更多</button>
+  <button id="Gotop">&uarr;</button>
+
+  <script data-main="./js/main" src="./js/require.js"></script>
+  <script>
+    require.config({
+      paths: {
+        'jquery': 'jquery-3.2.1.min'
+      }
+    })
+
+    require(['jquery', 'rotation', 'waterfalls'], 
+      function($, Rotation, waterfall) {
+        new Rotation(document.querySelector('.g-header'))
+        waterfall.getData()
+        waterfall.bind()
+      })
+  </script>
+</body>
+</html>
