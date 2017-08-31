@@ -1,0 +1,111 @@
+html,body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.g-header {
+  position: relative;
+}
+.g-header,
+.g-header-rotation {
+  height: 100%;
+}
+.g-header-win {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+.g-header-rotation {
+  position: absolute;
+  width: 400%;
+}
+.g-header-rotation img {
+  width: 100%;
+  height: 100%;
+}
+.g-header-rotation li {
+  float: left;
+  width: 25%;
+  height: 100%;
+}
+.g-header-pre {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translate(0, -50%);
+  font-size: 60px;
+  color: #fff;
+  cursor: pointer;
+}
+.g-header-next {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  font-size: 60px;
+  transform: translate(0, -50%);
+  color: #fff;
+  cursor: pointer;
+}
+.g-header-bullets {
+  position: absolute;
+  bottom: 40px;
+  width: 100%;
+  text-align: center;
+}
+.g-header-bullets li {
+  display: inline-block;
+  width: 30px;
+  height: 10px;
+  margin: 0 10px;
+  border: 1px solid #fff;
+  cursor: pointer;
+}
+.g-header-bullets .active {
+  background-color: #0f0;
+}
+
+.waterfalls {
+  position: relative;
+  padding: 20px;
+}
+.waterfalls figure {
+  position: absolute;
+  padding: 5px;
+  box-sizing: border-box;
+}
+.waterfalls img {
+  width: 100%;
+  height: 100%;
+}
+#load-btn {
+  position: relative;
+  margin: 20px 50px;
+  padding: 8px 10px;
+  border: none;
+  font-size: 18px;
+  color: #fff;
+  background-color: rgb(254, 197, 3);
+  cursor: pointer;
+}
+#Gotop {
+  position: fixed;
+  right: 20px;
+  bottom: 30px;
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 50%;
+  font-size: 20px;
+  color: #fff;
+  background-color: rgb(254, 197, 3);
+  cursor: pointer;
+  outline: none;
+}
