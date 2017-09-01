@@ -1,4 +1,4 @@
-# 一些个人小项目
+# 一些个人项目
 > [ajax+木桶布局+懒加载实现图片搜索引擎](https://liushuangbill.github.io/projects/js/imgEngine/ImgEngine)
 
 > [ajax+瀑布流布局+懒加载实现新闻页面](https://liushuangbill.github.io/projects/js/jQeury/news-waterfall.html)
