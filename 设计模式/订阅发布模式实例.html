@@ -44,6 +44,7 @@
     }
 
     var pubsub = new PubSub()
+    // 将不同的逻辑分离，便于维护
     pubsub.on('click', function(value, next) {
       var count = document.querySelector('#count')
       count.textContent = next
