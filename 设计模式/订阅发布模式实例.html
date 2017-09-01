@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>发布订阅模式</title>
+  <style>
+    .ct {
+      max-width: 200px;
+      margin: 0 auto;
+      padding: 30px;
+      text-align: center;
+      border: 1px solid;
+    }
+  </style>
+</head>
+<body>
+  <div class="ct">
+    <button id="btn">click<span id="count">0</span>次</button>
+    <span id="sum">0</span>
+  </div>
+
+  <script>
+    function PubSub() {
+      this.events = {}
+    }
+    // 订阅
+    PubSub.prototype.on = function(topic, callback) {
+      this.events[topic] = this.events[topic] || []
+      this.events[topic].push(callback)
+    }
+    // 发布
+    PubSub.prototype.fire = function(name) {
+      var args = [].slice.call(arguments).slice(1)
+      if (!this.events[name]) {
+        return
+      }
+      for (var i = 0; i < this.events[name].length; i++) {
+        this.events[name][i](args[0], args[1])
+      }
+    }
+    // 取消
+    PubSub.prototype.off = function(name) {
+      delete this.events[name]
+    }
+
+    var pubsub = new PubSub()
+    pubsub.on('click', function(value, next) {
+      var count = document.querySelector('#count')
+      count.textContent = next
+    })
+    pubsub.on('click', function(value) {
+      document.querySelector('#sum').textContent = value
+    })
+
+    var data = [0]
+    document.querySelector('#btn').onclick = function() {
+      var next = parseInt(document.querySelector('#count').innerHTML) + 1
+      data.push(data.length)
+      var value = data.reduce(function(pre, cur) {
+        return pre + cur
+      })
+      // 点击按钮发布事件
+      pubsub.fire('click', value, next)
+    }
+  </script>
+</body>
+</html>
