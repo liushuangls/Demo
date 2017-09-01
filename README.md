@@ -6,3 +6,5 @@
 > [ajax实现定位+天气查询](https://liushuangbill.github.io/projects/node/server/www/weather/weather.html)
 
 > [20行实现一个模板引擎](https://github.com/LiuShuangBill/projects/blob/master/%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E/template.js)
+
+> [原生js实现2048游戏](https://liushuangbill.github.io/projects/js/2048/)
