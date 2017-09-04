@@ -36,8 +36,8 @@
       width: 100%;
       max-width: 540px;
       padding: 2px;
-      background-color: #fff;
-      border: 2px solid rgba(0, 0, 0, .3);
+      background-color: rgba(255, 255, 255, .3);
+      border: 1px solid rgba(0, 0, 0, .2);
       text-align: left;
     }
     header input {
@@ -47,13 +47,14 @@
       line-height: 23px;
       font: normal 18px arial,sans-serif;
       outline: none;
+      background-color: transparent;
     }
     header button {
       float: right;
       width: 60px;
       height: 45px;
       border: none;
-      background-color: #008ddf;
+      background-color: transparent;
       cursor: pointer;
       background-image: url('./搜索.png');
       background-repeat: no-repeat;
@@ -102,25 +103,20 @@
   
   <script>
 
-    /* 
-      - 使用说明： 只能使用padding来形成图片间的空隙 img的包裹标签figure需要设置box-sizing: border-box;
-      - 如使用不同的id或class可更改init函数，以及enquiries和lazyLoading函数里的q
-     */
-
     function ImgEngine() {
       this.init()
       this.getData(this.q, function(data, self) {
         self.render(data, self)
       })
-      this.enquiries()
-      this.lazyLoading()
-      this.resize()      
+      this.bind()
+      this.lazyLoading()   
     }
     // 初始化需要调用的参数
     ImgEngine.prototype.init = function() {
       this.colWidth = 0
       this.colList = []
       this.q
+      this.textBox = document.querySelector('#query')
       this.load = document.querySelector('.loading')
       this.main = document.querySelector('main')
       this.search = document.querySelector('#search')
@@ -143,7 +139,7 @@
       xhr.onload = function() {
         if (this.status >= 200 && this.status < 300 || this.status === 304) {
           if (JSON.parse(this.response).totalHits === 0) {
-            load.textContent = '没有数据，请输入中文或英文关键字'
+            self.load.textContent = '没有数据，请输入中文或英文关键字'
             return
           }
           self.page++
@@ -200,20 +196,54 @@
       }
       return false
     }
-    // 查询
-    ImgEngine.prototype.enquiries = function() {
+
+    ImgEngine.prototype.bind = function() {
       var self = this
-      this.search.onclick = function() {
-        q = document.querySelector('#query').value
-        if (q) {
-          self.page = 1
-          self.main.innerHTML = ''
-          self.getData(q, function(data, self) {
-            self.render(data, self)
-          })
-        } else {
-          alert('查询为空！')
+      // 点击查询按钮
+      this.search.addEventListener('click', function() {
+        self.queryData()
+      })
+      this.textBox.addEventListener('keydown', function(e) {
+        if(e.keyCode == 13) {  
+          self.queryData()
         }
+      })
+      // 回车
+      // this.search.onFocus = function() {
+      //   console.log(1)
+      //   document.onkeydown = function(e) {  
+      //     //捕捉回车事件
+      //     var ev = (typeof event!= 'undefined') ? window.event : e;
+      //     if(ev.keyCode == 13) {  
+      //       self.queryData()
+      //     }
+      //   }
+      // }
+      
+      // 改变大小刷新页面
+      if (!this.IsPC()) return
+      var self = this
+      window.onresize = function () {
+        if (self.timmer2) {
+          clearTimeout(self.timmer2)
+        }
+        self.timmer2 = setTimeout(function () {
+          location.reload()
+        }, 80)
+      }
+    }
+    
+    ImgEngine.prototype.queryData = function() {
+      var self = this
+      q = document.querySelector('#query').value
+      if (q) {
+        self.page = 1
+        self.main.innerHTML = ''
+        self.getData(q, function(data, self) {
+          self.render(data, self)
+        })
+      } else {
+        alert('查询为空！')
       }
     }
     // 懒加载
@@ -233,19 +263,7 @@
         }, 30)
       }
     }
-    // 改变窗口大小刷新页面（重新布局）
-    ImgEngine.prototype.resize = function () {
-      if (!this.IsPC()) return
-      var self = this
-      window.onresize = function () {
-        if (self.timmer2) {
-          clearTimeout(self.timmer2)
-        }
-        self.timmer2 = setTimeout(function () {
-          location.reload()
-        }, 80)
-      }
-    }
+
     // 判断是否为PC
     ImgEngine.prototype.IsPC = function() {
       var userAgentInfo = navigator.userAgent;  
