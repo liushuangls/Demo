@@ -8,3 +8,5 @@
 > [20行实现一个模板引擎](https://github.com/LiuShuangBill/projects/blob/master/%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E/template.js)
 
 > [原生js实现2048游戏](https://liushuangbill.github.io/projects/js/2048/)
+
+> [js实现6种设计模式](https://github.com/LiuShuangBill/projects/blob/master/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/design.js)
