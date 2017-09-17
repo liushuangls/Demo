@@ -30,7 +30,7 @@
       margin: 40px auto;
       border: 1px solid;
       padding: 40px 80px;
-      width: 750px;
+      width: 810px;
       font-family: Arial, Helvetica, sans-serif;
     }
     .layout {
@@ -48,7 +48,6 @@
     }
     header .name {
       display: inline-block;
-      margin-left: 40px;
       font-weight: bold;
       vertical-align: middle;
     }
@@ -59,9 +58,7 @@
     .name span:last-child {
       font-size: 20px;
       line-height: 1.2;
-    }
-    .contact {
-      float: right;
+      margin-left: 15px;
     }
     .contact h3 {
       font-size: 20px;
@@ -71,6 +68,12 @@
       height: 4px;
       border: none;
       background: #000;
+      width: 40%;
+      float: left;
+    }
+    .contact p {
+      float: left;
+      width: 240px;
     }
     section hr {
       position: relative;
@@ -118,24 +121,29 @@
     .do p {
       font-size: 14px;
     }
+    .contact .email {
+      width: 300px;
+    }
   </style>
 </head>
 <body>
   <div class="wrap">
     <header class="layout clearfix">
       <div class="touxiang">
-        <img src="https://avatars0.githubusercontent.com/u/22131171?v=4&s=460">
         <div class="name">
-          <span>刘爽</span><br>
+          <span>刘爽</span>
           <span>应聘前端工程师</span>  
         </div>
       </div>
       <div class="contact">
         <h3>个人信息/联系方式</h3>
-        <hr>
+        <div class="clearfix">
+            <hr>
+        </div>
+        <br>
         <p><span class="icon">&#xe62b;</span>基本信息：刘爽 / 男 / 20</p>
         <p><span class="icon">&#xe606;</span>电话：17358546110</p>
-        <p><span class="icon">&#xe605;</span>邮箱：liushuangbill@outlook.com</p>
+        <p class="email"><span class="icon">&#xe605;</span>邮箱：liushuangbill@outlook.com</p>
         <p><span class="icon">&#xe63e;</span>大学专业：软件开发</p>
         <p><span class="icon">&#xe641;</span>前端经验：1年以上</p>
       </div>
