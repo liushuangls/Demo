@@ -28,7 +28,6 @@
     }
     .wrap {
       margin: 40px auto;
-      border: 1px solid;
       padding: 40px 80px;
       width: 810px;
       font-family: Arial, Helvetica, sans-serif;
@@ -82,14 +81,15 @@
       width: 400px;
     }
     section p {
-      text-indent: .5em;
+      position: relative;
+      padding-left: 15px;
     }
     section p::before {
       content: '';
-      position: relative;
+      position: absolute;
       left: -10px;
+      top: 8px;
       display: inline-block;
-      margin-right: 20px;
       width: 5px;
       height: 5px;
       background: #000;
@@ -176,7 +176,7 @@
           <h3>在线书签管理器</h3>
           <p>使用express+vue技术栈实现登陆、注册、书签管理、展示的单页应用。</p>
           <p>技术栈：Express、Sequelize、sqlite、webpack、vue、ES6、fetch、cookie。</p>
-          <p>使用sqlite数据库储存数据；使用fetch与后端通信；使用vue组件化开发构建页面；使用cookie保存登陆状态。</p>
+          <p>使用Sequelize连接与操作数据库；使用sqlite数据库储存数据；使用fetch与后端通信；后端使用express搭建主要负责模型层；使用vue组件化开发构建页面；使用cookie保存登陆状态。</p>
           <p>项目源码：
             <a href="https://github.com/LiuShuangBill/online-bookmarks">https://github.com/LiuShuangBill/online-bookmarks</a>
           </p>
@@ -186,7 +186,7 @@
           <h3>个人博客系统</h3>
           <p>使用Vue技术栈搭建个人博客系统。</p>
           <p>技术栈：vue、vue-router、ES6、webpack、Nodejs、npm script。</p>
-          <p>使用Nodejs实现本地文件读写；使用vue-router实现路由与组件之间的映射关系；使用npm script实现命令行新建博文功能。</p>
+          <p>使用Nodejs实现本地文件读写；使用vue-router实现路由与组件之间的映射关系；使用npm script实现命令行新建博文和更新数据功能。</p>
           <p>项目源码：
             <a href="https://github.com/LiuShuangBill/blog">https://github.com/LiuShuangBill/blog</a>
           </p>
