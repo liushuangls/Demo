@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>calender</title>
+  <style>
+    ul {
+      width: 300px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      text-align: center;
+    }
+    .ipt1,
+    .ipt2 {
+      box-sizing: border-box;
+      width: 300px;
+      padding: 10px 5px;
+    }
+
+    .calendar {
+      position: absolute;
+      top: 60px;
+      border: 1px solid #ccc;
+      box-shadow: 2px 2px 10px #aaa;
+      display: none;
+    }
+    .calendar2 {
+      left: 320px;
+    }
+    .calendar li {
+      display: flex;
+      justify-content: space-between;
+      padding: 5px 20px;
+    }
+    .calendar li:first-child {
+      display: block;
+      padding: 10px 15px;
+      color: #fff;
+      font-size: 18px;
+      letter-spacing: 1px;
+      background-color: #03B3FF;
+    }
+    .calendar .pre {
+      float: left;
+      width: 0;
+      height: 0;
+      border: 10px solid #fff;
+      border-top-color: transparent;
+      border-bottom-color: transparent;
+      border-left-color: transparent;
+      cursor: pointer;
+    }
+    .calendar .next {
+      float: right;
+      width: 0;
+      height: 0;
+      border: 10px solid #fff;
+      border-top-color: transparent;
+      border-bottom-color: transparent;
+      border-right-color: transparent;
+      cursor: pointer;
+    }
+    .days span {
+      cursor: pointer;
+    }
+
+  </style>
+</head>
+<body>
+  <input type="text" class="ipt1" placeholder="click me">
+  <input type="text" class="ipt2" placeholder="click me">
+  <ul class="calendar1 calendar">
+    <li class="head">
+     <span class="pre"></span>
+     <span class="month"></span>
+     <span class="next"></span>
+   </li>
+    <li class="week">
+     <span>日</span>
+     <span>一</span>
+     <span>二</span>
+     <span>三</span>
+     <span>四</span>
+     <span>五</span>
+     <span>六</span>
+   </li>
+    <li class="days">
+     <span></span>
+     <span></span>
+     <span></span>
+     <span></span>
+     <span></span>
+     <span></span>
+     <span></span>
+   </li>
+    <li class="days">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+   </li>
+    <li  class="days">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+   </li>
+    <li class="days">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+   </li>
+    <li class="days">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+   </li>
+    <li class="days">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+   </li>
+  </ul>
+  <ul class="calendar2 calendar">
+    <li class="head">
+     <span class="pre"></span>
+     <span class="month"></span>
+     <span class="next"></span>
+   </li>
+   <li class="week">
+    <span>日</span>
+    <span>一</span>
+    <span>二</span>
+    <span>三</span>
+    <span>四</span>
+    <span>五</span>
+    <span>六</span>
+  </li>
+    <li class="days">
+     <span></span>
+     <span></span>
+     <span></span>
+     <span></span>
+     <span></span>
+     <span></span>
+     <span></span>
+   </li>
+    <li class="days">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+   </li>
+    <li  class="days">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+   </li>
+    <li class="days">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+   </li>
+    <li class="days">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+   </li>
+    <li class="days">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+   </li>
+  </ul>
+  
+  <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script src='./calendar.js'></script>
+</body>
+</html>

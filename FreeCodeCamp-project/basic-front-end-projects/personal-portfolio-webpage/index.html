@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>personal portfolio webpage</title>
+  <link rel="stylesheet" href="main.css">
+</head>
+<body>
+  <header class="g-hd">
+    <section class="ct">
+      <img src="./imgs/qlip.png" alt="logo">
+      <ul class="m-nav">
+        <li class="active">ABOUT</li>
+        <li>PORTFOLIO</li>
+        <li>CONTACT</li>
+      </ul>
+    </section>
+  </header>
+  <section class="g-bd">
+    <section class="ct">
+      <section class="page1" id="page1">
+        <section class="img">
+          <img src="./imgs/touxiang.jpeg" alt="me">    
+        </section>
+        <section class="text">
+          <p>Front-End Developer and UX/UI designer, with practical experience in project management, branding strategy, and creative direction; devoted to functional programming and information architecture.</p>
+          <hr>
+          <p>Web Developer - User Experience Designer - Graphic Artist</p>
+        </section>
+      </section>
+      <section class="page2" id="page2">
+        <h1>PORTFOLIO</h1>
+        <hr>
+        <section class="imgs">
+          <img src="./imgs/01.jpg">
+          <img src="./imgs/02.jpg">
+        </section>
+        <section class="imgs">
+          <img src="./imgs/03.jpg">
+          <img src="./imgs/04.jpg">
+        </section>
+        <section class="imgs">
+          <img src="./imgs/05.jpg">
+          <img src="./imgs/06.jpg">
+        </section>
+      </section>
+      <section class="page3 clear" id="page3">
+        <h1>CONTACT ME</h1>
+        <hr>
+        <section class="form">
+          <input type="text" placeholder="Name">
+          <br>
+          <input type="text" placeholder="Email Address">
+          <br>
+          <input type="text" placeholder="Phone Number">
+          <br>
+          <input type="text" placeholder="Message">
+          <br>
+          <button>send</button>
+        </section>
+        <section class="article">
+          <p>Want to get in touch with me? Be it to request more info about myself or my experience, to ask for my resume, tips on how to solve your sudoku, random questions about the universe and the meaning of life, or even if only for some nice Fika here in stunning Toronto... just feel free to drop me a line anytime.</p>
+          <p>I promise to reply A.S.A.P.</p>
+          <p>Note: No spam/soliciting pour moi, merci :)</p>
+        </section>
+      </section>
+    </section>
+  </section>
+  <section class="g-about">
+    <section class="wrap">
+      <div class="left">
+        <h3>ABOUT THIS PAGE</h3>
+        <p>Made with  and 
+          by Justin Sane.</p>
+      </div>
+      <div class="right">
+        <h3>AROUND THE WEB</h3>
+        <img src="./imgs/github.png" alt="">
+        <img src="./imgs/qq.png" alt="">
+        <img src="./imgs/微信.png" alt="">
+        <img src="./imgs/facebook.png" alt="">
+      </div>
+    </section>
+  </section>
+  <footer class="g-ft">
+    <p>qlip © 2017. All Rights Reversed</p>
+  </footer>
+
+  <script>
+  const nav = $('.m-nav li')
+  const len = nav.length
+  const aboutTop = getTop($('.page1'))
+  const portfolioTop = getTop($('.page2'))
+  const contactTop = getTop($('.page3')) + portfolioTop + aboutTop + 80
+
+  function $(select) {
+    if (select) {
+      try {
+        let node = document.querySelectorAll(select)
+        if (node.length === 1) {
+          return node[0]
+        } else {
+          return node
+        }
+      } catch (error) {
+        return null
+      }
+    } else {
+      return null
+    }
+  }
+
+  function getTop(e){
+    let offset=e.offsetTop
+    if(e.offsetParent!=null) offset+=getTop(e.offsetParent)
+    return offset
+  }
+
+  function active(num) {
+    for (let i = 0; i < len; i++) {
+      nav[i].classList.remove('active')
+    }
+    nav[num].classList.add('active')
+  }
+
+  
+
+  window.onscroll = function () {
+    if ((aboutTop - window.scrollY) < 80) {
+      active(0)
+    }
+    if ((portfolioTop - window.scrollY) < 80) {
+      active(1)
+    }
+    if ((contactTop - window.scrollY) < 80) {
+      active(2)
+    }
+  }
+
+  for (let i = 0; i < len; i++) {
+    nav[i].onclick = function () {
+      if (i === 0) {
+        window.location.hash = "#page1"
+      }
+      if (i === 1) {
+        window.location.hash = "#page2"
+      }
+      if (i === 2) {
+        window.location.hash = "#page3"
+      }
+    }
+  }
+
+  </script>
+</body>
+</html>

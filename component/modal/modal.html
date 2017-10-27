@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Modal</title>
+  <style>
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    .Modal {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 250px;
+      transform: translate(-50%, -50%);
+      border: 1px solid;
+    }
+    .Modal .header {
+      padding: 0 15px;
+      height: 50px;
+      line-height: 50px;
+      background-color: #ccc;
+    }
+    .Modal .header span {
+      float: right;
+      font-size: 20px;
+      cursor: pointer;
+    }
+    .Modal .body {
+      height: 150px;
+      line-height: 150px;
+      text-align: center;
+      background-color: #fff;
+    }
+    .body button{
+      margin: 20px;
+    }
+    .Modal .footer {
+      height: 30px;
+      background-color: #ccc;
+    }
+
+    .cover {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, .3);
+    }
+
+    .hide {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <button class="m1">modal1</button>
+  <button class="m2">modal2</button>
+  <button class="m3">modal3</button>
+  <button class="m4">modal4</button>
+
+  
+  <div class="cover hide"></div>
+  <div class="Modal hide">
+    <div class="header"><span class="close">X</span></div>
+    <div class="body"></div>
+    <div class="footer"></div>
+  </div>
+
+  <script src="./modal.js"></script>
+</body>
+</html>
