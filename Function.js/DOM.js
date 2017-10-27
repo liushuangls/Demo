@@ -2,12 +2,7 @@
 function $(select) {
   if (select) {
     try {
-      let node = document.querySelectorAll(select)
-      if (node.length === 1) {
-        return node[0]
-      } else {
-        return node
-      }
+      return node = document.querySelectorAll(select)
     } catch (error) {
       return null
     }
@@ -28,4 +23,9 @@ function getLeft(e){
   var offset=e.offsetLeft;
   if(e.offsetParent!=null) offset+=getLeft(e.offsetParent);
   return offset;
+}
+
+// 获取css样式
+getStyle (elem, attr) {
+  return window.getComputedStyle(elem,null).getPropertyValue(attr)
 }
